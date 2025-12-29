@@ -67,7 +67,10 @@ public class CylinderSpawner : MonoBehaviour
             cylindersOnRoad.RemoveAt(0);
         }
     }
+    public void ExportCylinder()
+    {
 
+    }
 
 
 

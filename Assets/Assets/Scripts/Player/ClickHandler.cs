@@ -20,10 +20,10 @@ public class ClickHandler : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, cylinderLayerMask))
             {
-                Cylinder clickedCylinder = hitInfo.collider.GetComponent<Cylinder>();
-                if (clickedCylinder != null)
+                CylinderSpawner clickedCylinderSpawner = hitInfo.collider.GetComponent<CylinderSpawner>();
+                if (clickedCylinderSpawner != null)
                 {
-                    Debug.Log($"Clicked on Cylinder with capacity: {clickedCylinder.capacity} and colorType: {clickedCylinder.colorType}");
+                    clickedCylinderSpawner.ExportCylinder();
                 }
             }
         }
