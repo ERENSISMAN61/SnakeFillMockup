@@ -5,9 +5,10 @@ using System.Collections.Generic;
 public class CylinderSpawner : MonoBehaviour
 {
     [SerializeField] private CylinderController cylinderController;
-    
+
     [TableList]
     [SerializeField] private List<CylinderData> cylindersToSpawn = new List<CylinderData>();
+    [SerializeField] private List<GameObject> cylindersOnRoad = new List<GameObject>();
 
     void Start()
     {
@@ -29,13 +30,26 @@ public class CylinderSpawner : MonoBehaviour
         {
             Vector3 position = spawnPosition + new Vector3(0, 0, -offset * i);
             GameObject spawnedObject = Instantiate(cylinderController.CylinderPrefab, position, Quaternion.identity, transform);
-            
+
+            cylindersOnRoad.Add(spawnedObject);
+
             Cylinder cylinderComponent = spawnedObject.GetComponent<Cylinder>();
             if (cylinderComponent != null)
             {
                 cylinderComponent.capacity = cylindersToSpawn[i].capacity;
-                cylinderComponent.UsedCapacity = cylindersToSpawn[i].usedCapacity;
+
                 cylinderComponent.colorType = cylindersToSpawn[i].colorType;
+
+                // Apply color based on ColorType
+                Color color = ColorTypeProvider.GetColor(cylindersToSpawn[i].colorType);
+                MeshRenderer meshRenderer = cylinderComponent.meshRenderer;
+                if (meshRenderer != null)
+                {
+                    // Create material instance to avoid shared material modification
+                    Material materialInstance = new Material(meshRenderer.material);
+                    materialInstance.color = color;
+                    meshRenderer.material = materialInstance;
+                }
             }
             else
             {
@@ -49,6 +63,5 @@ public class CylinderSpawner : MonoBehaviour
 public class CylinderData
 {
     public int capacity;
-    public int usedCapacity;
     public ColorType colorType;
 }

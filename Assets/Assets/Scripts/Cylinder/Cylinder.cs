@@ -6,4 +6,5 @@ public class Cylinder : MonoBehaviour
     public int UsedCapacity;
 
     public ColorType colorType;
+    public MeshRenderer meshRenderer;
 }
