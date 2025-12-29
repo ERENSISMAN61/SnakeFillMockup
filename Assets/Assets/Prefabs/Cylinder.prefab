@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1345080817712768507}
   - component: {fileID: 5669700650507548948}
   - component: {fileID: 1107844079946497983}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,3 +159,4 @@ MonoBehaviour:
   UsedCapacity: 0
   colorType: 0
   meshRenderer: {fileID: 5669700650507548948}
+  cylinderSpawner: {fileID: 0}

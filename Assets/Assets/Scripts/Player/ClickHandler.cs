@@ -2,15 +2,28 @@ using UnityEngine;
 
 public class ClickHandler : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private AttackSlotsController attackSlotsController;
 
-    // Update is called once per frame
+    private int freeSlotIndex = -2;
+
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Left mouse button clicked.");
+            freeSlotIndex = attackSlotsController.WhichSlotsFree();
+            if (freeSlotIndex == -1) return;
+            Debug.Log($"Free attack slot found at index: {freeSlotIndex}");
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, 1 << 6))
+            {
+                Cylinder clickedCylinder = hitInfo.collider.GetComponent<Cylinder>();
+                if (clickedCylinder != null)
+                {
+                    Debug.Log($"Clicked on Cylinder with capacity: {clickedCylinder.capacity} and colorType: {clickedCylinder.colorType}");
+                }
+            }
+        }
     }
 }

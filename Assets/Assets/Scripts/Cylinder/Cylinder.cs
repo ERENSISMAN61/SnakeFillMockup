@@ -7,4 +7,12 @@ public class Cylinder : MonoBehaviour
 
     public ColorType colorType;
     public MeshRenderer meshRenderer;
+
+    public CylinderSpawner cylinderSpawner;
+
+
+    public void RequestExport()
+    {
+
+    }
 }

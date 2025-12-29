@@ -8,7 +8,7 @@ public class CylinderSpawner : MonoBehaviour
 
     [TableList]
     [SerializeField] private List<CylinderData> cylindersToSpawn = new List<CylinderData>();
-    [SerializeField] private List<GameObject> cylindersOnRoad = new List<GameObject>();
+    public List<GameObject> cylindersOnRoad = new List<GameObject>();
 
     void Start()
     {
@@ -50,6 +50,8 @@ public class CylinderSpawner : MonoBehaviour
                     materialInstance.color = color;
                     meshRenderer.material = materialInstance;
                 }
+
+                cylinderComponent.cylinderSpawner = this;
             }
             else
             {
@@ -57,7 +59,38 @@ public class CylinderSpawner : MonoBehaviour
             }
         }
     }
+
+    public void RemoveFirstItem()
+    {
+        if (cylindersOnRoad.Count > 0)
+        {
+            cylindersOnRoad.RemoveAt(0);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
 
 [System.Serializable]
 public class CylinderData

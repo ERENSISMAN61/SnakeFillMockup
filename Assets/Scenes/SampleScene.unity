@@ -317,6 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7438a34d2684644aac3909e20731281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFulled: 0
 --- !u!1 &108598421
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,7 +328,8 @@ GameObject:
   m_Component:
   - component: {fileID: 108598422}
   - component: {fileID: 108598423}
-  m_Layer: 0
+  - component: {fileID: 108598424}
+  m_Layer: 6
   m_Name: QueueSlot_1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,6 +381,28 @@ MonoBehaviour:
     colorType: 0
   - capacity: 0
     colorType: 1
+  cylindersOnRoad: []
+--- !u!65 &108598424
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108598421}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 17}
+  m_Center: {x: 0, y: 0, z: -8}
 --- !u!1 &155641245
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,6 +620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7438a34d2684644aac3909e20731281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFulled: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,7 +928,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1047000915}
   - component: {fileID: 1047000916}
-  m_Layer: 0
+  - component: {fileID: 1047000917}
+  m_Layer: 6
   m_Name: QueueSlot_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -955,6 +981,28 @@ MonoBehaviour:
     colorType: 0
   - capacity: 0
     colorType: 1
+  cylindersOnRoad: []
+--- !u!65 &1047000917
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047000914}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 17}
+  m_Center: {x: 0, y: 0, z: -8}
 --- !u!1 &1048839183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,7 +1621,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1529192871}
   - component: {fileID: 1529192872}
-  m_Layer: 0
+  - component: {fileID: 1529192873}
+  m_Layer: 6
   m_Name: QueueSlot_1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1625,6 +1674,28 @@ MonoBehaviour:
     colorType: 0
   - capacity: 0
     colorType: 1
+  cylindersOnRoad: []
+--- !u!65 &1529192873
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529192870}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 17}
+  m_Center: {x: 0, y: 0, z: -8}
 --- !u!1 &1576241244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,6 +1705,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1576241245}
+  - component: {fileID: 1576241246}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1656,6 +1728,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1576241246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576241244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da41424b51be16c419a9be3e367043d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cylinderLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  attackSlotsController: {fileID: 61704379}
 --- !u!1 &1625608792
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,6 +1790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7438a34d2684644aac3909e20731281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFulled: 0
 --- !u!1 &1640504121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1951,6 +2040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7438a34d2684644aac3909e20731281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFulled: 0
 --- !u!1 &2138815922
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,6 +2087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7438a34d2684644aac3909e20731281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFulled: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
