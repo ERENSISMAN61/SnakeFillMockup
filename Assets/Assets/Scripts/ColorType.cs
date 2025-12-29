@@ -8,4 +8,5 @@ public enum ColorType
     Yellow,
     Purple,
     Orange
+    
 }
