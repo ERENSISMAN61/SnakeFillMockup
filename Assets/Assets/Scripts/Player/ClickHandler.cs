@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ClickHandler : MonoBehaviour
 {
+
+    [SerializeField] private LayerMask cylinderLayerMask;
     [SerializeField] private AttackSlotsController attackSlotsController;
 
     private int freeSlotIndex = -2;
@@ -16,7 +18,7 @@ public class ClickHandler : MonoBehaviour
             Debug.Log($"Free attack slot found at index: {freeSlotIndex}");
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, 1 << 6))
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, cylinderLayerMask))
             {
                 Cylinder clickedCylinder = hitInfo.collider.GetComponent<Cylinder>();
                 if (clickedCylinder != null)
