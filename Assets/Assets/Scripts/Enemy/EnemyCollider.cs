@@ -7,11 +7,11 @@ public class EnemyCollider : MonoBehaviour
     {
         enemy = transform.parent.GetComponent<Enemy>();
     }
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Snake"))
-        {
-            enemy.GetDamage();
-        }
-    }
+    // void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.CompareTag("Snake"))
+    //     {
+    //         enemy.GetDamage();
+    //     }
+    // }
 }
