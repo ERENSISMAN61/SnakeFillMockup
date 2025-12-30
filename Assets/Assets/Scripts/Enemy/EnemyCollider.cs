@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyCollider : MonoBehaviour
 {
-    private Enemy enemy;
+    public Enemy enemy; // Public yapıldı - Bullet kontrolü için
     void Start()
     {
         enemy = transform.parent.GetComponent<Enemy>();

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Snake
+  - Enemy
   layers:
   - Default
   - TransparentFX

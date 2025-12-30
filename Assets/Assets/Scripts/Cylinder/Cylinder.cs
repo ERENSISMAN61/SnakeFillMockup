@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using System.Collections;
 using System.Collections.Generic;
 public class Cylinder : MonoBehaviour
 {
@@ -14,7 +15,9 @@ public class Cylinder : MonoBehaviour
     public TextMeshPro capacityText;
     public GameObject bulletPrefab;
     public float bulletSpacing = 0.3f; // Bullet'lar arası mesafe
-    public float bulletSpeed = 1f; // Bullet hareket hızı
+    public float bulletSpeed = 5f; // Bullet hareket hızı
+    public float waveAmplitude = 0.5f; // Yılan dalgasının genişliği
+    public float waveFrequency = 2f; // Yılan dalgasının hızı
 
     private Transform trashTransform;
     private bool isOnAttackSlot = false;
@@ -109,33 +112,66 @@ public class Cylinder : MonoBehaviour
                 GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
                 activeBullets.Add(bullet);
 
-                // Hedef pozisyon - yılan gibi sırayla dizilim
-                Vector3 targetPosition = targetEnemy.transform.position;
+                // Bullet scriptini ayarla
+                Bullet bulletScript = bullet.GetComponent<Bullet>();
+                if (bulletScript != null)
+                {
+                    bulletScript.targetPosition = targetEnemy.transform.position;
+                    bulletScript.targetEnemy = targetEnemy; // Hedef enemy'yi ata
+                    bulletScript.moveSpeed = bulletSpeed;
+                    bulletScript.waveAmplitude = waveAmplitude;
+                    bulletScript.waveFrequency = waveFrequency;
+                }
+
                 UsedCapacity++;
                 capacityText.text = (capacity - UsedCapacity).ToString();
-                // Mermiyi hedefe hareket ettir
-                bullet.transform.DOMove(targetPosition, bulletSpeed).SetEase(Ease.Linear).OnComplete(() =>
-                {
-                    // Mermi hedefe ulaştığında
-                    if (targetEnemy != null && targetEnemy.health > 0)
-                    {
-                        targetEnemy.GetDamage();
 
-                    }
-
-                    activeBullets.Remove(bullet);
-                    Destroy(bullet);
-
-                    // Tüm mermiler tamamlandı mı?
-                    if (activeBullets.Count == 0)
-                    {
-                        isBusyWithEnemy = false;
-                    }
-                });
+                // Hedefe ulaşma kontrolü için coroutine başlat
+                StartCoroutine(CheckBulletReachedTarget(bullet, targetEnemy));
             });
 
             // Her mermi arasında delay
             snakeSequence.AppendInterval(0.1f);
+        }
+    }
+
+    private IEnumerator CheckBulletReachedTarget(GameObject bullet, Enemy targetEnemy)
+    {
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+
+        while (bullet != null && bulletScript != null)
+        {
+            if (Vector3.Distance(bullet.transform.position, bulletScript.targetPosition) < 0.1f)
+            {
+                // Mermi hedefe ulaştı
+                if (targetEnemy != null && targetEnemy.health > 0)
+                {
+                    targetEnemy.GetDamage();
+                }
+
+                activeBullets.Remove(bullet);
+                Destroy(bullet);
+
+                // Tüm mermiler tamamlandı mı?
+                if (activeBullets.Count == 0)
+                {
+                    isBusyWithEnemy = false;
+                }
+
+                yield break;
+            }
+
+            yield return null;
+        }
+
+        // Bullet destroy edildiyse
+        if (bullet == null)
+        {
+            activeBullets.Remove(bullet);
+            if (activeBullets.Count == 0)
+            {
+                isBusyWithEnemy = false;
+            }
         }
     }
 }
