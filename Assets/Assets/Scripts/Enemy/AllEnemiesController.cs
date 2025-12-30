@@ -51,11 +51,17 @@ public class AllEnemiesController : MonoBehaviour
     public void RemoveWallFromList(EnemyWalls enemyWalls)
     {
         enemyWallsList.Remove(enemyWalls);
-        SetOutlineActive();
+
         if (enemyWallsList.Count == 0)
         {
             Debug.Log("All enemy walls destroyed!");
             // Additional logic when all walls are destroyed
+            GameManager.Instance.LevelCompleted();
+        }
+        else
+        {
+            SetOutlineActive();
+            SetFirstAttackableFrontEnemies();
         }
     }
 

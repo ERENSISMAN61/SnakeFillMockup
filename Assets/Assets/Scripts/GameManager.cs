@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject currentLevel;
 
+    [SerializeField] private GameObject currentLevelInstance;
+
+
     public GameObject loadingPanel;
     public GameObject failText;
     public GameObject successText;
@@ -35,7 +38,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         currentLevel = levels[currentLevelIndex];
-        Instantiate(currentLevel, Vector3.zero, Quaternion.identity);
+        currentLevelInstance = Instantiate(currentLevel, Vector3.zero, Quaternion.identity);
         loadingPanel.SetActive(false);
 
 
@@ -58,12 +61,14 @@ public class GameManager : MonoBehaviour
     }
     public void RestartLevel()
     {
-        Instantiate(currentLevel, Vector3.zero, Quaternion.identity);
-        loadingPanel.SetActive(false);
+        DestroyLastLevel();
+        currentLevelInstance = Instantiate(currentLevel, Vector3.zero, Quaternion.identity);
+
 
     }
     public void LoadNextLevel()
     {
+        DestroyLastLevel();
         successText.SetActive(false);
 
         currentLevelIndex++;
@@ -78,13 +83,25 @@ public class GameManager : MonoBehaviour
         // Load the next level
 
         currentLevel = levels[currentLevelIndex];
-        Instantiate(currentLevel, Vector3.zero, Quaternion.identity);
-        loadingPanel.SetActive(false);
+        currentLevelInstance = Instantiate(currentLevel, Vector3.zero, Quaternion.identity);
     }
 
     public void NextLevel()
     {
         LoadNextLevel();
 
+    }
+    private void DestroyLastLevel()
+    {
+        StartCoroutine(DestroyLastLevelCoroutine());
+    }
+    private IEnumerator DestroyLastLevelCoroutine()
+    {
+        DestroyImmediate(currentLevelInstance);
+        currentLevelInstance = null;
+        yield return null;
+        yield return null;
+        yield return null;
+        loadingPanel.SetActive(false);
     }
 }

@@ -207,7 +207,7 @@ Canvas:
   m_GameObject: {fileID: 150681051}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -249,7 +249,7 @@ RectTransform:
   m_GameObject: {fileID: 336624698}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.59, y: 5.59, z: 5.59}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 555197001}
@@ -257,7 +257,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -686.37}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &336624700
@@ -714,7 +714,7 @@ Canvas:
   m_GameObject: {fileID: 843670967}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -756,7 +756,7 @@ RectTransform:
   m_GameObject: {fileID: 844481631}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.59, y: 5.59, z: 5.59}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 745748521}
@@ -764,7 +764,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -686.37}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &844481633
@@ -1148,15 +1148,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 056a076a29f7a6c48a9a490ee0afd118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allEnemiesController: {fileID: 0}
   levels:
+  - {fileID: 3406113007266511810, guid: 9a522872256274d4598dfb20170a0b31, type: 3}
   - {fileID: 3406113007266511810, guid: e68258e6c7591a84dac79f516b312546, type: 3}
   - {fileID: 3406113007266511810, guid: aa0ba7ae5b34ead44a327df30ac3b125, type: 3}
   currentLevelIndex: 0
   currentLevel: {fileID: 0}
   loadingPanel: {fileID: 1995731569}
-  failText: {fileID: 0}
-  successText: {fileID: 0}
+  failText: {fileID: 1072197116}
+  successText: {fileID: 2122545043}
 --- !u!4 &1762612772
 Transform:
   m_ObjectHideFlags: 0
