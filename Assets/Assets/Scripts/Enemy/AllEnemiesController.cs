@@ -6,6 +6,8 @@ public class AllEnemiesController : MonoBehaviour
     [SerializeField] private List<EnemyWalls> enemyWallsList = new List<EnemyWalls>();
     public float StartZPosition = 10f;
     public float OffsetZPosition = 2f;
+    public Dictionary<ColorType, Enemy> attackableFrontEnemies = new Dictionary<ColorType, Enemy>();
+
     void Start()
     {
         float currentOffsetZ = StartZPosition;
@@ -21,8 +23,22 @@ public class AllEnemiesController : MonoBehaviour
             }
         }
         SetOutlineActive();
+        SetFirstAttackableFrontEnemies();
     }
+    public void SetFirstAttackableFrontEnemies()
+    {
+        attackableFrontEnemies.Clear();
+        if (enemyWallsList.Count == 0) return;
+        var FrontEnemyWall = enemyWallsList[0];
+        if (FrontEnemyWall == null) return;
+        FrontEnemyWall.GetEnemies().ForEach(enemy =>
+        {
 
+            attackableFrontEnemies.Add(enemy.colorType, enemy);
+
+        });
+
+    }
     public void RemoveWallFromList(EnemyWalls enemyWalls)
     {
         enemyWallsList.Remove(enemyWalls);

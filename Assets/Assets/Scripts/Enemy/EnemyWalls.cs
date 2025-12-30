@@ -29,4 +29,9 @@ public class EnemyWalls : MonoBehaviour
             allEnemiesController.RemoveWallFromList(this);
         }
     }
+
+    public List<Enemy> GetEnemies()
+    {
+        return enemies;
+    }
 }
