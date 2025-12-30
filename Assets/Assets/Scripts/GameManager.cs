@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public AllEnemiesController allEnemiesController;
+
     public List<GameObject> levels;
 
     [SerializeField]
@@ -37,20 +37,10 @@ public class GameManager : MonoBehaviour
         currentLevel = levels[currentLevelIndex];
         Instantiate(currentLevel, Vector3.zero, Quaternion.identity);
         loadingPanel.SetActive(false);
-        allEnemiesController = FindAnyObjectByType<AllEnemiesController>();
-        FindAllEC();
+
+
     }
 
-    private void FindAllEC()
-    {
-        StartCoroutine(FindAllECCoroutine());
-    }
-    private IEnumerator FindAllECCoroutine()
-    {
-        yield return null;
-        yield return null;
-        allEnemiesController = FindAnyObjectByType<AllEnemiesController>();
-    }
 
     public void LevelFailed()
     {
@@ -70,7 +60,7 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(currentLevel, Vector3.zero, Quaternion.identity);
         loadingPanel.SetActive(false);
-        FindAllEC();
+
     }
     public void LoadNextLevel()
     {
@@ -95,6 +85,6 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         LoadNextLevel();
-        FindAllEC();
+
     }
 }

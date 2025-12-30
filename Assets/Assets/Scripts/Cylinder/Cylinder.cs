@@ -20,20 +20,30 @@ public class Cylinder : MonoBehaviour
     public float waveFrequency = 2f; // Yılan dalgasının hızı
 
     private Transform trashTransform;
-    private bool isOnAttackSlot = false;
+    [SerializeField] private bool isOnAttackSlot = false;
     private bool isBusyWithEnemy = false;
     private List<GameObject> activeBullets = new List<GameObject>();
+
+    private AllEnemiesController allEnemiesController;
+    void Start()
+    {
+        allEnemiesController = FindAnyObjectByType<AllEnemiesController>();
+    }
     void Update()
     {
-        if (isBusyWithEnemy) return;
-        if (!isOnAttackSlot) return;
+        if (isBusyWithEnemy) { Debug.Log("Busy with enemy, cannot attack now."); return; }
+        if (!isOnAttackSlot)
+        {
+            // Debug.Log("Not on attack slot, cannot attack.");
+            return;
+        }
         if (UsedCapacity >= capacity)
         {
             Debug.Log("Cylinder is full, cannot export more items.");
             return;
         }
 
-        var attackableEnemies = GameManager.Instance.allEnemiesController.attackableFrontEnemies;
+        var attackableEnemies = allEnemiesController.attackableFrontEnemies;
 
         if (attackableEnemies.ContainsKey(colorType))
         {
@@ -53,6 +63,10 @@ public class Cylinder : MonoBehaviour
 
             AttackEnemy(targetEnemy);
         }
+        else
+        {
+            Debug.Log($"No attackable enemy found for color {colorType}");
+        }
     }
     public void ExportItem(AttackSlotsController attackSlotsController, int slotIndex)
     {
@@ -71,6 +85,7 @@ public class Cylinder : MonoBehaviour
     {
         transform.DOMove(targetTransform.position, 0.5f).OnComplete(() =>
         {
+            Debug.Log("Cylinder reached attack slot.");
             isOnAttackSlot = true;
 
         });

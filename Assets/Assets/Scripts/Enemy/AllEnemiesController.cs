@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class AllEnemiesController : MonoBehaviour
 {
@@ -23,6 +24,14 @@ public class AllEnemiesController : MonoBehaviour
             }
         }
         SetOutlineActive();
+        StartCoroutine(WaitAndSetFirstAttackableFrontEnemies());
+    }
+
+    public IEnumerator WaitAndSetFirstAttackableFrontEnemies()
+    {
+        yield return null;
+        yield return null;
+        yield return null;
         SetFirstAttackableFrontEnemies();
     }
     public void SetFirstAttackableFrontEnemies()
