@@ -7,4 +7,6 @@ public class CylinderController : MonoBehaviour
 
     public GameObject CylinderPrefab => cylinderPrefab;
     public float OffsetZ => offsetZ;
+
+    public Transform trashTransform;
 }

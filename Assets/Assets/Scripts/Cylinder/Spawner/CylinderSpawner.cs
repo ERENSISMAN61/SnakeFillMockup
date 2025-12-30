@@ -5,10 +5,13 @@ using System.Collections.Generic;
 public class CylinderSpawner : MonoBehaviour
 {
     [SerializeField] private CylinderController cylinderController;
+    [SerializeField] private AttackSlotsController attackSlotsController;
 
     [TableList]
     [SerializeField] private List<CylinderData> cylindersToSpawn = new List<CylinderData>();
+
     public List<GameObject> cylindersOnRoad = new List<GameObject>();
+
 
     void Start()
     {
@@ -39,7 +42,8 @@ public class CylinderSpawner : MonoBehaviour
                 cylinderComponent.capacity = cylindersToSpawn[i].capacity;
 
                 cylinderComponent.colorType = cylindersToSpawn[i].colorType;
-
+                cylinderComponent.SetInitialText();
+                cylinderComponent.SetTrashTransform(cylinderController.trashTransform);
                 // Apply color based on ColorType
                 Color color = ColorTypeProvider.GetColor(cylindersToSpawn[i].colorType);
                 MeshRenderer meshRenderer = cylinderComponent.meshRenderer;
@@ -67,9 +71,23 @@ public class CylinderSpawner : MonoBehaviour
             cylindersOnRoad.RemoveAt(0);
         }
     }
-    public void ExportCylinder()
+    public void ExportCylinder(int slotIndex)
     {
+        if (attackSlotsController.attackSlots[slotIndex].isFulled) return;
+        if (cylindersOnRoad.Count <= 0) return;
 
+        Cylinder exportItem = null;
+        exportItem = cylindersOnRoad[0].GetComponent<Cylinder>();
+
+        if (exportItem == null) return;
+
+        cylindersOnRoad.RemoveAt(0);
+
+        // attackSlotsController.attackSlots[slotIndex].ImportCylinder(exportItem);
+
+
+
+        exportItem.ExportItem(attackSlotsController, slotIndex);
     }
 
 
