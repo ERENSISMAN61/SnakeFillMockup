@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    // Game Events
+    public event System.Action OnOneWallCleaned;
 
     public List<GameObject> levels;
 
@@ -91,6 +93,12 @@ public class GameManager : MonoBehaviour
         LoadNextLevel();
 
     }
+
+    public void TriggerOneWallCleaned()
+    {
+        OnOneWallCleaned?.Invoke();
+    }
+
     private void DestroyLastLevel()
     {
         StartCoroutine(DestroyLastLevelCoroutine());

@@ -1154,6 +1154,7 @@ MonoBehaviour:
   - {fileID: 3406113007266511810, guid: aa0ba7ae5b34ead44a327df30ac3b125, type: 3}
   currentLevelIndex: 0
   currentLevel: {fileID: 0}
+  currentLevelInstance: {fileID: 0}
   loadingPanel: {fileID: 1995731569}
   failText: {fileID: 1072197116}
   successText: {fileID: 2122545043}
