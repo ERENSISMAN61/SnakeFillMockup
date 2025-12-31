@@ -25,6 +25,7 @@ public class Cylinder : MonoBehaviour
     private List<GameObject> activeBullets = new List<GameObject>();
 
     private AllEnemiesController allEnemiesController;
+    private AttackSlot occupiedAttackSlot;
     void Start()
     {
         allEnemiesController = FindAnyObjectByType<AllEnemiesController>();
@@ -72,11 +73,11 @@ public class Cylinder : MonoBehaviour
     {
         transform.SetParent(trashTransform);
         // Logic to export this cylinder to the specified attack slot
-        AttackSlot slot = attackSlotsController.attackSlots[slotIndex];
-        if (!slot.isFulled)
+        occupiedAttackSlot = attackSlotsController.attackSlots[slotIndex];
+        if (!occupiedAttackSlot.isFulled)
         {
-            slot.isFulled = true;
-            ExportMove(slot.transform);
+            occupiedAttackSlot.isFulled = true;
+            ExportMove(occupiedAttackSlot.transform);
         }
     }
 
@@ -148,8 +149,26 @@ public class Cylinder : MonoBehaviour
             // Her mermi arasında delay
             snakeSequence.AppendInterval(0.1f);
         }
-    }
+        Debug.Log($"Z Sent {bulletsToSend} bullets, {capacity} capacity, {UsedCapacity} used capacity to enemy.");
 
+        if (capacity <= UsedCapacity)
+        {
+            Debug.Log("Z Cylinder is empty after attack, destroying cylinder.");
+            DestroyCylinder();
+        }
+
+    }
+    private void DestroyCylinder()
+    {
+        transform.SetParent(null);
+        transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
+        {
+            isBusyWithEnemy = false;
+            isOnAttackSlot = false;
+            occupiedAttackSlot.isFulled = false;
+            Destroy(gameObject);
+        });
+    }
     private IEnumerator CheckBulletReachedTarget(GameObject bullet, Enemy targetEnemy)
     {
         Bullet bulletScript = bullet.GetComponent<Bullet>();
