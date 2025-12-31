@@ -21,7 +21,7 @@ public class Cylinder : MonoBehaviour
 
     private Transform trashTransform;
     [SerializeField] private bool isOnAttackSlot = false;
-    private bool isBusyWithEnemy = false;
+    public bool isBusyWithEnemy = false;
     private List<GameObject> activeBullets = new List<GameObject>();
 
     private AllEnemiesController allEnemiesController;
