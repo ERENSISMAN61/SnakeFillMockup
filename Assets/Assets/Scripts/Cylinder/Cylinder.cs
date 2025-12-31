@@ -142,6 +142,11 @@ public class Cylinder : MonoBehaviour
                 UsedCapacity++;
                 capacityText.text = (capacity - UsedCapacity).ToString();
 
+                if (capacity <= UsedCapacity)
+                {
+                    Debug.Log("Z Cylinder is empty after attack, destroying cylinder.");
+                    DestroyCylinder();
+                }
                 // Hedefe ulaşma kontrolü için coroutine başlat
                 StartCoroutine(CheckBulletReachedTarget(bullet, targetEnemy));
             });
@@ -149,13 +154,9 @@ public class Cylinder : MonoBehaviour
             // Her mermi arasında delay
             snakeSequence.AppendInterval(0.1f);
         }
-        Debug.Log($"Z Sent {bulletsToSend} bullets, {capacity} capacity, {UsedCapacity} used capacity to enemy.");
 
-        if (capacity <= UsedCapacity)
-        {
-            Debug.Log("Z Cylinder is empty after attack, destroying cylinder.");
-            DestroyCylinder();
-        }
+
+
 
     }
     private void DestroyCylinder()
