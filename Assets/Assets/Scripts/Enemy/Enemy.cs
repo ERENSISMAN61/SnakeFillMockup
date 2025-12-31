@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public ColorType colorType;
 
     private Vector3 initialWallScale;
+    private AllEnemiesController allEnemiesController;
 
 
     void Start()
@@ -22,9 +23,16 @@ public class Enemy : MonoBehaviour
         wallMeshRenderer.material.color = ColorTypeProvider.GetColor(colorType);
 
         initialWallScale = wallModelTransform.localScale;
+        allEnemiesController = FindAnyObjectByType<AllEnemiesController>();
     }
     public void EnemyDestroy()
     {
+        // Dictionary'den kaldır
+        if (allEnemiesController != null)
+        {
+            allEnemiesController.RemoveEnemyFromAttackable(this);
+        }
+        
         EnemyWalls enemyWalls = transform.parent.GetComponent<EnemyWalls>();
         enemyWalls.RemoveEnemy(this);
 

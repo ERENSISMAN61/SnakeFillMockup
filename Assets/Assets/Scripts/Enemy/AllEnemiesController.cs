@@ -27,6 +27,11 @@ public class AllEnemiesController : MonoBehaviour
         StartCoroutine(WaitAndSetFirstAttackableFrontEnemies());
     }
 
+    void Update()
+    {
+        Debug.Log("Current Attackable Front Enemies Count: " + attackableFrontEnemies.Count);
+    }
+
     public IEnumerator WaitAndSetFirstAttackableFrontEnemies()
     {
         yield return null;
@@ -48,6 +53,18 @@ public class AllEnemiesController : MonoBehaviour
         });
 
     }
+    
+    public void RemoveEnemyFromAttackable(Enemy enemy)
+    {
+        if (attackableFrontEnemies.ContainsKey(enemy.colorType))
+        {
+            if (attackableFrontEnemies[enemy.colorType] == enemy)
+            {
+                attackableFrontEnemies.Remove(enemy.colorType);
+            }
+        }
+    }
+    
     public void RemoveWallFromList(EnemyWalls enemyWalls)
     {
         enemyWallsList.Remove(enemyWalls);

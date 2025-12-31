@@ -26,6 +26,7 @@ public class Cylinder : MonoBehaviour
 
     private AllEnemiesController allEnemiesController;
     private AttackSlot occupiedAttackSlot;
+
     void Start()
     {
         allEnemiesController = FindAnyObjectByType<AllEnemiesController>();

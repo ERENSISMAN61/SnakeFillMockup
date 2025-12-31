@@ -103,7 +103,7 @@ public class CylinderSpawner : MonoBehaviour
         for (int i = 0; i < cylindersOnRoad.Count; i++)
         {
             Vector3 targetPosition = transform.position + new Vector3(0, 0, -cylinderController.OffsetZ * i);
-            cylindersOnRoad[i].transform.DOMove(targetPosition, 0.3f).OnComplete(() =>
+            cylindersOnRoad[i].transform.DOMove(targetPosition, 0.55f).OnComplete(() =>
             {
                 isMovingAllSlots = false;
             });
