@@ -108,7 +108,9 @@ public class Cylinder : MonoBehaviour
 
         // Kaç mermi göndereceğimizi hesapla
         int remainingCapacity = capacity - UsedCapacity;
-        int bulletsToSend = Mathf.Min(remainingCapacity, targetEnemy.health);
+        int bulletsToSend = Mathf.Min(remainingCapacity, targetEnemy.usableHealth);
+
+        targetEnemy.usableHealth -= bulletsToSend;
 
         if (bulletsToSend <= 0)
         {

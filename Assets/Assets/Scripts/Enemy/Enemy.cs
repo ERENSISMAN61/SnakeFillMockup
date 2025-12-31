@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     public TextMeshPro healthText;
 
     public int health;
-
+    public int usableHealth; // Cylinder'ların etkileşebileceği sağlık değeri
     public ColorType colorType;
 
     private Vector3 initialWallScale;
@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         healthText.text = health.ToString();
+        usableHealth = health;
         wallMeshRenderer.material.color = ColorTypeProvider.GetColor(colorType);
 
         initialWallScale = wallModelTransform.localScale;
