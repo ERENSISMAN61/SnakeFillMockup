@@ -1,6 +1,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class CylinderSpawner : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class CylinderSpawner : MonoBehaviour
     [SerializeField] private List<CylinderData> cylindersToSpawn = new List<CylinderData>();
 
     public List<GameObject> cylindersOnRoad = new List<GameObject>();
+
+    [SerializeField] private bool isMovingAllSlots = false;
 
 
     void Start()
@@ -73,6 +76,9 @@ public class CylinderSpawner : MonoBehaviour
     }
     public void ExportCylinder(int slotIndex)
     {
+        if (isMovingAllSlots) return;
+        isMovingAllSlots = true;
+
         if (attackSlotsController.attackSlots[slotIndex].isFulled) return;
         if (cylindersOnRoad.Count <= 0) return;
 
@@ -88,9 +94,21 @@ public class CylinderSpawner : MonoBehaviour
 
 
         exportItem.ExportItem(attackSlotsController, slotIndex);
+
+        MoveAllSlotsForward();
     }
 
-
+    private void MoveAllSlotsForward()
+    {
+        for (int i = 0; i < cylindersOnRoad.Count; i++)
+        {
+            Vector3 targetPosition = transform.position + new Vector3(0, 0, -cylinderController.OffsetZ * i);
+            cylindersOnRoad[i].transform.DOMove(targetPosition, 0.3f).OnComplete(() =>
+            {
+                isMovingAllSlots = false;
+            });
+        }
+    }
 
 
 
