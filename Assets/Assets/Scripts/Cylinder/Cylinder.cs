@@ -3,6 +3,7 @@ using DG.Tweening;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+
 public class Cylinder : MonoBehaviour
 {
     public int capacity;
@@ -72,7 +73,7 @@ public class Cylinder : MonoBehaviour
     }
     public void ExportItem(AttackSlotsController attackSlotsController, int slotIndex)
     {
-        transform.SetParent(trashTransform);
+        // transform.SetParent(trashTransform);
         // Logic to export this cylinder to the specified attack slot
         occupiedAttackSlot = attackSlotsController.attackSlots[slotIndex];
         if (!occupiedAttackSlot.isFulled)
@@ -86,7 +87,8 @@ public class Cylinder : MonoBehaviour
 
     public void ExportMove(Transform targetTransform)
     {
-        transform.DOMove(targetTransform.position, 0.5f).OnComplete(() =>
+        transform.SetParent(targetTransform);
+        transform.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
         {
             Debug.Log("Cylinder reached attack slot.");
             isOnAttackSlot = true;
@@ -101,7 +103,7 @@ public class Cylinder : MonoBehaviour
     public void SetTrashTransform(Transform trashTransform)
     {
         // Store the trash transform for later use
-        this.trashTransform = trashTransform;
+        // this.trashTransform = trashTransform;
     }
 
     private void AttackEnemy(Enemy targetEnemy)

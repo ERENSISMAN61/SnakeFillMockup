@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
     {
         DestroyLastLevel();
         successText.SetActive(false);
-
+        failText.SetActive(false);
         currentLevelIndex++;
         if (currentLevelIndex >= levels.Count)
         {
@@ -142,5 +142,7 @@ public class GameManager : MonoBehaviour
         levelAlreadyCompleted = false;
 
         loadingPanel.SetActive(false);
+        failText.SetActive(false);
+        successText.SetActive(false);
     }
 }
