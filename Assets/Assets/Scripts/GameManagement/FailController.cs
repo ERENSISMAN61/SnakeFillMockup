@@ -205,7 +205,7 @@ public class FailController : MonoBehaviour
             failCheckCounter++;
             nextFailCheckTime = Time.time + failCheckInterval;
 
-            Debug.LogWarning($"Fail Check {failCheckCounter}/{requiredFailChecks}: {reason}");
+            Debug.Log($"Fail Check {failCheckCounter}/{requiredFailChecks}: {reason}");
 
             // 3 kez üst üste fail durumu tespit edildiyse
             if (failCheckCounter >= requiredFailChecks)
@@ -232,7 +232,7 @@ public class FailController : MonoBehaviour
             return;
         }
         alreadyFailed = true;
-        Debug.LogError($"[FailControl] ✖✖✖ FAIL TETİKLENDİ ✖✖✖\nSebep: {reason}");
+        Debug.Log($"[FailControl] ✖✖✖ FAIL TETİKLENDİ ✖✖✖\nSebep: {reason}");
         failCheckCounter = 0; // Sayacı sıfırla
         GameManager.Instance.CheckCompleteLevel(false);
     }
