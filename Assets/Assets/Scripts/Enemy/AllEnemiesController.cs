@@ -53,7 +53,7 @@ public class AllEnemiesController : MonoBehaviour
         });
 
     }
-    
+
     public void RemoveEnemyFromAttackable(Enemy enemy)
     {
         if (attackableFrontEnemies.ContainsKey(enemy.colorType))
@@ -64,7 +64,7 @@ public class AllEnemiesController : MonoBehaviour
             }
         }
     }
-    
+
     public void RemoveWallFromList(EnemyWalls enemyWalls)
     {
         enemyWallsList.Remove(enemyWalls);
@@ -73,7 +73,7 @@ public class AllEnemiesController : MonoBehaviour
         {
             Debug.Log("All enemy walls destroyed!");
             // Additional logic when all walls are destroyed
-            GameManager.Instance.LevelCompleted();
+            GameManager.Instance.CheckCompleteLevel(true);
         }
         else
         {

@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     public GameObject failText;
     public GameObject successText;
 
+    private bool levelAlreadyFailed = false;
+    private bool levelAlreadyCompleted = false;
+
     void Awake()
     {
 
@@ -49,6 +52,7 @@ public class GameManager : MonoBehaviour
 
     public void LevelFailed()
     {
+
         failText.SetActive(true);
         loadingPanel.SetActive(true);
         Debug.Log("Level Failed! Restarting level...");
@@ -56,11 +60,34 @@ public class GameManager : MonoBehaviour
     }
     public void LevelCompleted()
     {
+
+
+
         successText.SetActive(true);
         loadingPanel.SetActive(true);
         Debug.Log("Level Completed! Loading next level...");
 
     }
+
+    public void CheckCompleteLevel(bool condition)
+    {
+
+        if (condition)
+        {
+            if (levelAlreadyCompleted || levelAlreadyFailed) return;
+            levelAlreadyCompleted = true;
+
+            LevelCompleted();
+        }
+        else
+        {
+            if (levelAlreadyFailed || levelAlreadyCompleted) return;
+            levelAlreadyFailed = true;
+
+            LevelFailed();
+        }
+    }
+
     public void RestartLevel()
     {
         DestroyLastLevel();
@@ -110,6 +137,10 @@ public class GameManager : MonoBehaviour
         yield return null;
         yield return null;
         yield return null;
+
+        levelAlreadyFailed = false;
+        levelAlreadyCompleted = false;
+
         loadingPanel.SetActive(false);
     }
 }

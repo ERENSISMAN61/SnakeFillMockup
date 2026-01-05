@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
         {
             allEnemiesController.RemoveEnemyFromAttackable(this);
         }
-        
+
         EnemyWalls enemyWalls = transform.parent.GetComponent<EnemyWalls>();
         enemyWalls.RemoveEnemy(this);
 

@@ -78,6 +78,7 @@ public class Cylinder : MonoBehaviour
         if (!occupiedAttackSlot.isFulled)
         {
             occupiedAttackSlot.isFulled = true;
+            occupiedAttackSlot.occupiedCylinder = this;
             ExportMove(occupiedAttackSlot.transform);
         }
     }
@@ -170,6 +171,7 @@ public class Cylinder : MonoBehaviour
             isBusyWithEnemy = false;
             isOnAttackSlot = false;
             occupiedAttackSlot.isFulled = false;
+            occupiedAttackSlot.occupiedCylinder = null;
             Destroy(gameObject);
         });
     }

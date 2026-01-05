@@ -28,6 +28,8 @@ public class FailController : MonoBehaviour
 
     void Update()
     {
+
+        if (Input.GetMouseButtonDown(0)) return; // Tıklama anında fail kontrolü yapma
         if (Time.time >= nextCheckTime)
         {
             nextCheckTime = Time.time + checkInterval;
@@ -47,7 +49,7 @@ public class FailController : MonoBehaviour
         // Herhangi bir cylinder düşmanla meşgulse fail kontrolleri yapma
         foreach (var slot in AttackSlotsController.attackSlots)
         {
-            Cylinder cylinder = slot.GetComponentInChildren<Cylinder>();
+            Cylinder cylinder = slot.occupiedCylinder;
             if (cylinder != null && cylinder.isBusyWithEnemy)
             {
                 return; // Herhangi bir cylinder meşgulse hiç fail verme

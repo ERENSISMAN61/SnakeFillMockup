@@ -4,5 +4,7 @@ public class AttackSlot : MonoBehaviour
 {
     public bool isFulled = false;
 
+    public Cylinder occupiedCylinder;
+
 
 }
