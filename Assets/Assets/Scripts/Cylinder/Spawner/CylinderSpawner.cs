@@ -100,14 +100,19 @@ public class CylinderSpawner : MonoBehaviour
 
     private void MoveAllSlotsForward()
     {
-        for (int i = 0; i < cylindersOnRoad.Count; i++)
+        // for (int i = 0; i < cylindersOnRoad.Count; i++)
+        // {
+        //     // Vector3 targetPosition = transform.localPosition + new Vector3(0, 0, -cylinderController.OffsetZ * i);
+        //     cylindersOnRoad[i].transform.DOLocalMove(transform.localPosition + new Vector3(0, 0, 0), 0.55f).OnComplete(() =>
+        //     {
+        //         isMovingAllSlots = false;
+        //     });
+        // }
+
+        transform.DOLocalMoveZ(transform.localPosition.z + cylinderController.OffsetZ, 0.55f).OnComplete(() =>
         {
-            Vector3 targetPosition = transform.position + new Vector3(0, 0, -cylinderController.OffsetZ * i);
-            cylindersOnRoad[i].transform.DOMove(targetPosition, 0.55f).OnComplete(() =>
-            {
-                isMovingAllSlots = false;
-            });
-        }
+            isMovingAllSlots = false;
+        });
     }
 
 
