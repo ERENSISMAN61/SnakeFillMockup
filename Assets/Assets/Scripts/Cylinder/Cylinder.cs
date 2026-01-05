@@ -130,6 +130,9 @@ public class Cylinder : MonoBehaviour
             int bulletIndex = i;
             snakeSequence.AppendCallback(() =>
             {
+                // Her atışta scale shake animasyonu
+                transform.DOShakeScale(0.08f, 0.2f, 1, 0, false);
+
                 // Mermiyi spawn et
                 GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
                 activeBullets.Add(bullet);
