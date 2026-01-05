@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
 
     private Vector3 initialWallScale;
     private AllEnemiesController allEnemiesController;
+    public ParticleSystem marbleDamageEffect;
+
 
 
     void Start()
@@ -42,6 +44,8 @@ public class Enemy : MonoBehaviour
 
         health--;
         healthText.text = health.ToString();
+
+        PlayMarbleDamageEffect();
         if (health <= 0)
         {
             wallModelTransform.DOKill(); // Stop any ongoing animations
@@ -64,6 +68,17 @@ public class Enemy : MonoBehaviour
             {
                 wallModelTransform.DOScale(initialWallScale, 0.05f).SetEase(Ease.OutSine);
             });
+        }
+    }
+
+    public void PlayMarbleDamageEffect()
+    {
+        if (marbleDamageEffect != null)
+        {
+            marbleDamageEffect.Stop();
+
+            marbleDamageEffect.Play();
+            // marbleDamageEffect.gameObject.SetActive(true);
         }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class Bullet : MonoBehaviour
 {
@@ -60,14 +61,12 @@ public class Bullet : MonoBehaviour
             {
                 hasHit = true;
                 targetEnemy.GetDamage();
-                Destroy(gameObject);
+                transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InSine).OnComplete(() =>
+                {
+                    Destroy(gameObject);
+                });
             }
         }
-        // Başka bir bullet'a çarptı mı?
-        else if (other.GetComponent<Bullet>() != null)
-        {
-            hasHit = true;
-            Destroy(gameObject);
-        }
+
     }
 }

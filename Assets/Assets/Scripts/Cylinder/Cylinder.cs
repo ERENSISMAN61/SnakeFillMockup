@@ -158,7 +158,7 @@ public class Cylinder : MonoBehaviour
             });
 
             // Her mermi arasında delay
-            snakeSequence.AppendInterval(0.1f);
+            snakeSequence.AppendInterval(0.08f);
         }
 
 
