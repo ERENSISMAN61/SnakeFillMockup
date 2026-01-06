@@ -14,8 +14,8 @@ public class FailController : MonoBehaviour
     private float nextCheckTime = 0f;
 
     private int failCheckCounter = 0;
-    private int requiredFailChecks = 3;
-    private float failCheckInterval = 0.5f; // Fail kontrolleri arası süre
+    private int requiredFailChecks = 5;
+    private float failCheckInterval = 0.55f; // Fail kontrolleri arası süre
     private float nextFailCheckTime = 0f;
     private bool alreadyFailed = false;
     void Start()
@@ -210,7 +210,7 @@ public class FailController : MonoBehaviour
             // 3 kez üst üste fail durumu tespit edildiyse
             if (failCheckCounter >= requiredFailChecks)
             {
-                TriggerFail(reason);
+                StartCoroutine(TriggerFailCoroutine(reason));
             }
         }
     }
@@ -235,5 +235,11 @@ public class FailController : MonoBehaviour
         Debug.Log($"[FailControl] ✖✖✖ FAIL TETİKLENDİ ✖✖✖\nSebep: {reason}");
         failCheckCounter = 0; // Sayacı sıfırla
         GameManager.Instance.CheckCompleteLevel(false);
+    }
+
+    private IEnumerator TriggerFailCoroutine(string reason)
+    {
+        yield return new WaitForSeconds(0.2f); // Kısa bir gecikme
+        TriggerFail(reason);
     }
 }

@@ -682,20 +682,14 @@ MonoBehaviour:
   cylinderController: {fileID: 3674846689765186119}
   attackSlotsController: {fileID: 8054021824633554887}
   cylindersToSpawn:
-  - capacity: 15
-    colorType: 1
-  - capacity: 10
+  - capacity: 20
     colorType: 3
   - capacity: 15
-    colorType: 0
-  - capacity: 13
+    colorType: 5
+  - capacity: 15
     colorType: 1
-  - capacity: 5
-    colorType: 5
-  - capacity: 20
-    colorType: 5
-  - capacity: 20
-    colorType: 4
+  - capacity: 25
+    colorType: 2
   cylindersOnRoad: []
   isMovingAllSlots: 0
 --- !u!65 &6500197027406524434
@@ -930,7 +924,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7234894982544587333}
   m_Layer: 0
-  m_Name: Level_1_Oguz
+  m_Name: Level_0_Eren
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1273,22 +1267,12 @@ MonoBehaviour:
   cylinderController: {fileID: 3674846689765186119}
   attackSlotsController: {fileID: 8054021824633554887}
   cylindersToSpawn:
-  - capacity: 15
-    colorType: 0
-  - capacity: 15
+  - capacity: 45
     colorType: 1
   - capacity: 10
-    colorType: 2
-  - capacity: 10
-    colorType: 3
-  - capacity: 5
-    colorType: 5
-  - capacity: 5
     colorType: 3
   - capacity: 15
     colorType: 0
-  - capacity: 5
-    colorType: 4
   cylindersOnRoad: []
   isMovingAllSlots: 0
 --- !u!65 &6244983334288250890
@@ -2423,19 +2407,13 @@ MonoBehaviour:
   cylinderController: {fileID: 3674846689765186119}
   attackSlotsController: {fileID: 8054021824633554887}
   cylindersToSpawn:
-  - capacity: 10
-    colorType: 3
-  - capacity: 5
-    colorType: 1
-  - capacity: 12
-    colorType: 1
-  - capacity: 10
-    colorType: 3
-  - capacity: 15
-    colorType: 2
-  - capacity: 15
+  - capacity: 30
+    colorType: 0
+  - capacity: 30
     colorType: 5
-  - capacity: 20
+  - capacity: 15
+    colorType: 3
+  - capacity: 45
     colorType: 4
   cylindersOnRoad: []
   isMovingAllSlots: 0
