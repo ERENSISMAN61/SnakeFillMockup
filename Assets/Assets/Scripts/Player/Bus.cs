@@ -40,4 +40,22 @@ public class Bus : MonoBehaviour
         // Add 2 units to the target position
         targetPosition += new Vector3(0f, 0f, 2f);
     }
+
+
+    //hareketsiz versiyon, bus z pos 0 yap, camera z pos -0.9 yap
+    //     private void HandleOneWallCleaned()
+    // {
+    //     Debug.Log("A wall has been cleaned! Bus received the event.");
+    //     MoveBus();
+    // }
+
+
+    // private void MoveBus()
+    // {
+    //     float moveDistance = 2f; // Move distance for each wall cleaned
+    //     float moveDuration = 1f; // Duration of the move animation
+
+    //     Vector3 targetPosition = transform.position + new Vector3(0f, 0f, moveDistance);
+    //     transform.DOMove(targetPosition, moveDuration).SetEase(Ease.InOutSine);
+    // }
 }
