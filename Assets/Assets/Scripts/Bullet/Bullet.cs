@@ -8,12 +8,13 @@ public class Bullet : MonoBehaviour
     public float moveSpeed = 5f;
     public float waveAmplitude = 0.5f; // Dalga genişliği (sağa sola ne kadar gidecek)
     public float waveFrequency = 2f; // Dalga hızı (ne kadar hızlı sallanacak)
-
+    public MeshRenderer meshRenderer;
     private Vector3 startPosition;
     private float traveledDistance = 0f;
     private Vector3 direction;
     private Vector3 perpendicular;
     private bool hasHit = false;
+
 
     void Start()
     {

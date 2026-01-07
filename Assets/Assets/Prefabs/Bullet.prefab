@@ -136,8 +136,9 @@ MonoBehaviour:
   targetPosition: {x: 0, y: 0, z: 0}
   targetEnemy: {fileID: 0}
   moveSpeed: 5
-  waveAmplitude: 0.5
-  waveFrequency: 2
+  waveAmplitude: 0.3
+  waveFrequency: 1
+  meshRenderer: {fileID: 7436475793308399382}
 --- !u!135 &4772124818386691457
 SphereCollider:
   m_ObjectHideFlags: 0

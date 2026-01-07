@@ -124,6 +124,9 @@ public class Cylinder : MonoBehaviour
 
         // Yılan şeklinde mermileri spawn et
         Sequence snakeSequence = DOTween.Sequence();
+        Color bulletColor = Color.Lerp(ColorTypeProvider.GetColor(colorType), Color.white, 0.3f);
+
+
 
         for (int i = 0; i < bulletsToSend; i++)
         {
@@ -137,15 +140,21 @@ public class Cylinder : MonoBehaviour
                 GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
                 activeBullets.Add(bullet);
 
+
+
                 // Bullet scriptini ayarla
                 Bullet bulletScript = bullet.GetComponent<Bullet>();
                 if (bulletScript != null)
                 {
+                    bulletScript.meshRenderer.material.color = bulletColor;
+
                     bulletScript.targetPosition = targetEnemy.transform.position;
                     bulletScript.targetEnemy = targetEnemy; // Hedef enemy'yi ata
                     bulletScript.moveSpeed = bulletSpeed;
                     bulletScript.waveAmplitude = waveAmplitude;
                     bulletScript.waveFrequency = waveFrequency;
+
+
                 }
 
                 UsedCapacity++;
