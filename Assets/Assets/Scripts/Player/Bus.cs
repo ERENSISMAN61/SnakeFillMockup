@@ -17,7 +17,6 @@ public class Bus : MonoBehaviour
     {
         // Initialize target position 4 units ahead
         targetPosition = transform.position + new Vector3(0f, 0f, 6f);
-        roadEndLine.transform.position = targetPosition + new Vector3(0f, 0f, 5.86f);
         roadEndLineRenderer.sharedMaterial.color = endLineColor;
 
     }
@@ -42,7 +41,7 @@ public class Bus : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, targetPosition) <= 0.8f)
+            if (Vector3.Distance(transform.position, targetPosition) <= 1.5f)
             {
                 Debug.LogWarning("Warning zone reached");
                 canWarning = true;
@@ -77,17 +76,17 @@ public class Bus : MonoBehaviour
                 Sequence damageSequence = DOTween.Sequence();
 
                 // First rotation: 10 degrees
-                damageSequence.Append(roadEndLine.transform.DORotate(new Vector3(25f, 0f, 0f), 0.15f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuad));
+                // damageSequence.Append(roadEndLine.transform.DORotate(new Vector3(25f, 0f, 0f), 0.15f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuad));
 
                 // Scale up and color change with second rotation: -30 degrees
-                damageSequence.Append(roadEndLine.transform.DOScale(currentScale * 1.1f, 0.3f));
-                damageSequence.Join(roadEndLineRenderer.sharedMaterial.DOColor(WarningColor, "_Color", 0.3f));
-                damageSequence.Join(roadEndLine.transform.DORotate(new Vector3(-40f, 0f, 0f), 0.3f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuart));
+                // damageSequence.Append(roadEndLine.transform.DOScale(currentScale * 1.1f, 0.3f));
+                damageSequence.Append(roadEndLineRenderer.sharedMaterial.DOColor(WarningColor, "_Color", 0.3f));
+                // damageSequence.Join(roadEndLine.transform.DORotate(new Vector3(-40f, 0f, 0f), 0.3f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuart));
 
                 // Return to normal state
-                damageSequence.Append(roadEndLine.transform.DOScale(Vector3.one, 0.25f));
-                damageSequence.Join(roadEndLineRenderer.sharedMaterial.DOColor(endLineColor, "_Color", 0.25f));
-                damageSequence.Join(roadEndLine.transform.DORotate(currentRotation.eulerAngles, 0.25f).SetEase(Ease.InQuart)).OnComplete(() =>
+                // damageSequence.Append(roadEndLine.transform.DOScale(Vector3.one, 0.25f));
+
+                damageSequence.Append(roadEndLineRenderer.sharedMaterial.DOColor(endLineColor, "_Color", 0.25f)).OnComplete(() =>
                 {
                     // Ensure final state is exactly as before
                     // roadEndLineRenderer.sharedMaterial.color = currentColor;
@@ -107,7 +106,7 @@ public class Bus : MonoBehaviour
                 warningSequence.Kill();
                 // Reset to original state
                 roadEndLineRenderer.sharedMaterial.DOColor(endLineColor, "_Color", 0.2f);
-                roadEndLine.transform.DOScale(Vector3.one, 0.2f);
+                // roadEndLine.transform.DOScale(Vector3.one, 0.2f);
             }
             return;
         }
@@ -119,9 +118,9 @@ public class Bus : MonoBehaviour
 
             // Color animation
             warningSequence.Append(roadEndLineRenderer.sharedMaterial.DOColor(WarningColor, "_Color", 0.3f));
-            warningSequence.Join(roadEndLine.transform.DOScale(Vector3.one * 1.1f, 0.3f));
+            // warningSequence.Join(roadEndLine.transform.DOScale(Vector3.one * 1.1f, 0.3f));
             warningSequence.Append(roadEndLineRenderer.sharedMaterial.DOColor(endLineColor, "_Color", 0.3f));
-            warningSequence.Join(roadEndLine.transform.DOScale(Vector3.one, 0.3f));
+            // warningSequence.Join(roadEndLine.transform.DOScale(Vector3.one, 0.3f));
 
 
 
@@ -135,11 +134,10 @@ public class Bus : MonoBehaviour
         Debug.Log("A wall has been cleaned! Bus received the event.");
         // Add 2 units to the target position
         targetPosition += new Vector3(0f, 0f, 2f);
-        roadEndLine.transform.DOMove(targetPosition + new Vector3(0f, 0f, 5.86f), 0.5f).OnComplete(() =>
-        {
-            canWarning = false;
-            DOWarningAnimation(); // This will stop the animation
-        });
+
+        // canWarning = false;
+        // DOWarningAnimation(); // This will stop the animation
+
 
 
     }

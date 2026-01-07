@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,7 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject currentLevelInstance;
 
     private int health = 3;
-    public Image healthIcon_1, healthIcon_2, healthIcon_3, healthBg;
+    public Image healthIcon_1;
+    public TextMeshProUGUI healthText_1;
 
 
     public GameObject loadingPanel;
@@ -62,9 +64,7 @@ public class GameManager : MonoBehaviour
         loadingPanel.SetActive(true);
 
         healthIcon_1.gameObject.SetActive(false);
-        healthIcon_2.gameObject.SetActive(false);
-        healthIcon_3.gameObject.SetActive(false);
-        healthBg.gameObject.SetActive(false);
+
         ResetHeartIcons();
         Debug.Log("Level Failed! Restarting level...");
 
@@ -72,11 +72,9 @@ public class GameManager : MonoBehaviour
     private void ResetHeartIcons()
     {
         healthIcon_1.transform.localScale = Vector3.one;
-        healthIcon_2.transform.localScale = Vector3.one;
-        healthIcon_3.transform.localScale = Vector3.one;
+
         healthIcon_1.color = Color.white;
-        healthIcon_2.color = Color.white;
-        healthIcon_3.color = Color.white;
+
     }
     public void LevelCompleted()
     {
@@ -87,9 +85,7 @@ public class GameManager : MonoBehaviour
         loadingPanel.SetActive(true);
 
         healthIcon_1.gameObject.SetActive(false);
-        healthIcon_2.gameObject.SetActive(false);
-        healthIcon_3.gameObject.SetActive(false);
-        healthBg.gameObject.SetActive(false);
+
         ResetHeartIcons();
         Debug.Log("Level Completed! Loading next level...");
 
@@ -120,9 +116,7 @@ public class GameManager : MonoBehaviour
 
 
         healthIcon_1.gameObject.SetActive(true);
-        healthIcon_2.gameObject.SetActive(true);
-        healthIcon_3.gameObject.SetActive(true);
-        healthBg.gameObject.SetActive(true);
+        healthText_1.text = "3";
 
         health = 3;
 
@@ -137,9 +131,8 @@ public class GameManager : MonoBehaviour
         failText.SetActive(false);
 
         healthIcon_1.gameObject.SetActive(true);
-        healthIcon_2.gameObject.SetActive(true);
-        healthIcon_3.gameObject.SetActive(true);
-        healthBg.gameObject.SetActive(true);
+        healthText_1.text = "3";
+
 
         health = 3;
 
@@ -196,11 +189,11 @@ public class GameManager : MonoBehaviour
 
         if (health == 2)
         {
-            DecreaseHealthAnimation(healthIcon_3);
+            DecreaseHealthAnimation(healthIcon_1);
         }
         else if (health == 1)
         {
-            DecreaseHealthAnimation(healthIcon_2);
+            DecreaseHealthAnimation(healthIcon_1);
         }
         else if (health == 0)
         {
@@ -214,16 +207,19 @@ public class GameManager : MonoBehaviour
         Sequence healthSequence = DOTween.Sequence();
 
         // Scale up with slowing ease and turn black
-        healthSequence.Append(healthIcon.transform.DOScale(Vector3.one * 1.3f, 0.4f).SetEase(Ease.OutQuad));
-        healthSequence.Join(healthIcon.DOColor(Color.black, 0.4f));
+        healthSequence.Append(healthIcon.transform.DOScale(Vector3.one * 1.3f, 0.1f));
+        healthSequence.Join(healthIcon.DOColor(Color.black, 0.4f).OnComplete(() =>
+        {
+            healthText_1.text = health.ToString();
+        }));
 
         // Scale down to 0
-        healthSequence.Append(healthIcon.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InQuad));
-
+        healthSequence.Append(healthIcon.transform.DOScale(Vector3.one, 0.5f));
+        healthSequence.Join(healthIcon.DOColor(Color.white, 0.15f));
         // Disable at the end
         healthSequence.OnComplete(() =>
         {
-            healthIcon.gameObject.SetActive(false);
+            // healthIcon.gameObject.SetActive(false);
 
             if (isFail)
             {
