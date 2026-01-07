@@ -16,7 +16,7 @@ public class Bus : MonoBehaviour
     void Start()
     {
         // Initialize target position 4 units ahead
-        targetPosition = transform.position + new Vector3(0f, 0f, 4f);
+        targetPosition = transform.position + new Vector3(0f, 0f, 6f);
         roadEndLine.transform.position = targetPosition + new Vector3(0f, 0f, 5.86f);
         roadEndLineRenderer.sharedMaterial.color = endLineColor;
 
@@ -42,7 +42,7 @@ public class Bus : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, targetPosition) <= 0.51f)
+            if (Vector3.Distance(transform.position, targetPosition) <= 1.31f)
             {
                 Debug.LogWarning("Warning zone reached");
                 canWarning = true;
@@ -89,10 +89,10 @@ public class Bus : MonoBehaviour
                 damageSequence.Join(roadEndLine.transform.DORotate(currentRotation.eulerAngles, 0.25f).SetEase(Ease.InQuart)).OnComplete(() =>
                 {
                     // Ensure final state is exactly as before
-                    roadEndLineRenderer.sharedMaterial.color = currentColor;
-                    roadEndLine.transform.localScale = currentScale;
-                    roadEndLine.transform.rotation = currentRotation;
-
+                    // roadEndLineRenderer.sharedMaterial.color = currentColor;
+                    // roadEndLine.transform.localScale = currentScale;
+                    // roadEndLine.transform.rotation = currentRotation;
+                    GameManager.Instance.DecreaseHealth();
 
                 });
             }
@@ -122,7 +122,13 @@ public class Bus : MonoBehaviour
         Debug.Log("A wall has been cleaned! Bus received the event.");
         // Add 2 units to the target position
         targetPosition += new Vector3(0f, 0f, 2f);
-        roadEndLine.transform.DOMove(targetPosition + new Vector3(0f, 0f, 5.86f), 0.5f);
+        roadEndLine.transform.DOMove(targetPosition + new Vector3(0f, 0f, 5.86f), 0.5f).OnComplete(() =>
+        {
+            canWarning = false;
+            DOWarningAnimation(); // This will stop the animation
+        });
+
+
     }
 
 

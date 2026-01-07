@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject currentLevelInstance;
 
     private int health = 3;
-    public GameObject healtIcon_1, healtIcon_2, healtIcon_3;
+    public Image healthIcon_1, healthIcon_2, healthIcon_3, healthBg;
 
 
     public GameObject loadingPanel;
@@ -55,11 +57,26 @@ public class GameManager : MonoBehaviour
 
     public void LevelFailed()
     {
-
+        DOTween.KillAll();
         failText.SetActive(true);
         loadingPanel.SetActive(true);
+
+        healthIcon_1.gameObject.SetActive(false);
+        healthIcon_2.gameObject.SetActive(false);
+        healthIcon_3.gameObject.SetActive(false);
+        healthBg.gameObject.SetActive(false);
+        ResetHeartIcons();
         Debug.Log("Level Failed! Restarting level...");
 
+    }
+    private void ResetHeartIcons()
+    {
+        healthIcon_1.transform.localScale = Vector3.one;
+        healthIcon_2.transform.localScale = Vector3.one;
+        healthIcon_3.transform.localScale = Vector3.one;
+        healthIcon_1.color = Color.white;
+        healthIcon_2.color = Color.white;
+        healthIcon_3.color = Color.white;
     }
     public void LevelCompleted()
     {
@@ -68,6 +85,12 @@ public class GameManager : MonoBehaviour
 
         successText.SetActive(true);
         loadingPanel.SetActive(true);
+
+        healthIcon_1.gameObject.SetActive(false);
+        healthIcon_2.gameObject.SetActive(false);
+        healthIcon_3.gameObject.SetActive(false);
+        healthBg.gameObject.SetActive(false);
+        ResetHeartIcons();
         Debug.Log("Level Completed! Loading next level...");
 
     }
@@ -94,6 +117,15 @@ public class GameManager : MonoBehaviour
     public void RestartLevel()
     {
         DestroyLastLevel();
+
+
+        healthIcon_1.gameObject.SetActive(true);
+        healthIcon_2.gameObject.SetActive(true);
+        healthIcon_3.gameObject.SetActive(true);
+        healthBg.gameObject.SetActive(true);
+
+        health = 3;
+
         currentLevelInstance = Instantiate(currentLevel, Vector3.zero, Quaternion.identity);
 
 
@@ -103,6 +135,14 @@ public class GameManager : MonoBehaviour
         DestroyLastLevel();
         successText.SetActive(false);
         failText.SetActive(false);
+
+        healthIcon_1.gameObject.SetActive(true);
+        healthIcon_2.gameObject.SetActive(true);
+        healthIcon_3.gameObject.SetActive(true);
+        healthBg.gameObject.SetActive(true);
+
+        health = 3;
+
         currentLevelIndex++;
         if (currentLevelIndex >= levels.Count)
         {
@@ -148,4 +188,51 @@ public class GameManager : MonoBehaviour
         failText.SetActive(false);
         successText.SetActive(false);
     }
+
+    public void DecreaseHealth()
+    {
+        health--;
+        if (health < 0) health = 0;
+
+        if (health == 2)
+        {
+            DecreaseHealthAnimation(healthIcon_3);
+        }
+        else if (health == 1)
+        {
+            DecreaseHealthAnimation(healthIcon_2);
+        }
+        else if (health == 0)
+        {
+            DecreaseHealthAnimation(healthIcon_1, true);
+
+        }
+    }
+
+    private void DecreaseHealthAnimation(Image healthIcon, bool isFail = false)
+    {
+        Sequence healthSequence = DOTween.Sequence();
+
+        // Scale up with slowing ease and turn black
+        healthSequence.Append(healthIcon.transform.DOScale(Vector3.one * 1.3f, 0.4f).SetEase(Ease.OutQuad));
+        healthSequence.Join(healthIcon.DOColor(Color.black, 0.4f));
+
+        // Scale down to 0
+        healthSequence.Append(healthIcon.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InQuad));
+
+        // Disable at the end
+        healthSequence.OnComplete(() =>
+        {
+            healthIcon.gameObject.SetActive(false);
+
+            if (isFail)
+            {
+                LevelFailed();
+            }
+        });
+    }
+
+
+
+
 }
