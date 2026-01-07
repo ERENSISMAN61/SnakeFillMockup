@@ -4,7 +4,7 @@ using DG.Tweening;
 public class Bus : MonoBehaviour
 {
     private Vector3 targetPosition;
-    private float moveSpeed = 0.5f; // Constant movement speed
+    private float moveSpeed = 0.2f; // Constant movement speed
 
     public GameObject roadEndLine;
     public Color endLineColor;
