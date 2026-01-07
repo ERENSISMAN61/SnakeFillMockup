@@ -42,7 +42,7 @@ public class Bus : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, targetPosition) <= 1.31f)
+            if (Vector3.Distance(transform.position, targetPosition) <= 0.8f)
             {
                 Debug.LogWarning("Warning zone reached");
                 canWarning = true;
@@ -52,15 +52,16 @@ public class Bus : MonoBehaviour
         }
         else
         {
+            Debug.LogError("Target position reached");
             canWarning = false;
-            DOWarningAnimation(); // This will stop the animation
+            DOWarningAnimation(true); // This will stop the animation
         }
     }
     private Sequence warningSequence;
 
-    private void DOWarningAnimation()
+    private void DOWarningAnimation(bool getDamage = false)
     {
-        if (!canWarning)
+        if (!canWarning && getDamage)
         {
             // Stop animation if already running
             if (warningSequence != null && warningSequence.IsActive())
@@ -95,6 +96,18 @@ public class Bus : MonoBehaviour
                     GameManager.Instance.DecreaseHealth();
 
                 });
+            }
+            return;
+        }
+        else if (!canWarning)
+        {
+            // Stop animation if already running
+            if (warningSequence != null && warningSequence.IsActive())
+            {
+                warningSequence.Kill();
+                // Reset to original state
+                roadEndLineRenderer.sharedMaterial.DOColor(endLineColor, "_Color", 0.2f);
+                roadEndLine.transform.DOScale(Vector3.one, 0.2f);
             }
             return;
         }
