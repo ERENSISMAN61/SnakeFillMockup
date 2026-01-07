@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject currentLevelInstance;
 
+    private int health = 3;
+    public GameObject healtIcon_1, healtIcon_2, healtIcon_3;
+
 
     public GameObject loadingPanel;
     public GameObject failText;

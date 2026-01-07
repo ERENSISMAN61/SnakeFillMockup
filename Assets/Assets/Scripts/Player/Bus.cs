@@ -42,7 +42,7 @@ public class Bus : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, targetPosition) <= 1.01f)
+            if (Vector3.Distance(transform.position, targetPosition) <= 0.51f)
             {
                 Debug.LogWarning("Warning zone reached");
                 canWarning = true;
@@ -65,10 +65,36 @@ public class Bus : MonoBehaviour
             // Stop animation if already running
             if (warningSequence != null && warningSequence.IsActive())
             {
+                // Save current state
+                Color currentColor = roadEndLineRenderer.sharedMaterial.color;
+                Vector3 currentScale = roadEndLine.transform.localScale;
+                Quaternion currentRotation = roadEndLine.transform.rotation;
 
                 warningSequence.Kill();
-                roadEndLineRenderer.sharedMaterial.color = endLineColor;
-                roadEndLine.transform.localScale = Vector3.one;
+
+                // Damage animation
+                Sequence damageSequence = DOTween.Sequence();
+
+                // First rotation: 10 degrees
+                damageSequence.Append(roadEndLine.transform.DORotate(new Vector3(25f, 0f, 0f), 0.15f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuad));
+
+                // Scale up and color change with second rotation: -30 degrees
+                damageSequence.Append(roadEndLine.transform.DOScale(currentScale * 1.1f, 0.3f));
+                damageSequence.Join(roadEndLineRenderer.sharedMaterial.DOColor(WarningColor, "_Color", 0.3f));
+                damageSequence.Join(roadEndLine.transform.DORotate(new Vector3(-40f, 0f, 0f), 0.3f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuart));
+
+                // Return to normal state
+                damageSequence.Append(roadEndLine.transform.DOScale(Vector3.one, 0.25f));
+                damageSequence.Join(roadEndLineRenderer.sharedMaterial.DOColor(endLineColor, "_Color", 0.25f));
+                damageSequence.Join(roadEndLine.transform.DORotate(currentRotation.eulerAngles, 0.25f).SetEase(Ease.InQuart)).OnComplete(() =>
+                {
+                    // Ensure final state is exactly as before
+                    roadEndLineRenderer.sharedMaterial.color = currentColor;
+                    roadEndLine.transform.localScale = currentScale;
+                    roadEndLine.transform.rotation = currentRotation;
+
+
+                });
             }
             return;
         }
