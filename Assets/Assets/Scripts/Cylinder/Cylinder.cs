@@ -30,7 +30,7 @@ public class Cylinder : MonoBehaviour
 
     void Start()
     {
-        allEnemiesController = FindAnyObjectByType<AllEnemiesController>();
+        // allEnemiesController = FindAnyObjectByType<AllEnemiesController>();
     }
     void Update()
     {
