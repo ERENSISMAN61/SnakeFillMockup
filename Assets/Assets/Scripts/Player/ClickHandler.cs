@@ -5,6 +5,7 @@ public class ClickHandler : MonoBehaviour
 
     [SerializeField] private LayerMask cylinderLayerMask;
     [SerializeField] private Rail rail;
+    [SerializeField] private GravityObject gravityObject;
 
 
 
@@ -22,7 +23,7 @@ public class ClickHandler : MonoBehaviour
                 CylinderSpawner clickedCylinderSpawner = hitInfo.collider.GetComponent<CylinderSpawner>();
                 if (clickedCylinderSpawner != null)
                 {
-                    clickedCylinderSpawner.ExportCylinder(rail);
+                    clickedCylinderSpawner.ExportCylinder(rail, gravityObject);
                 }
             }
         }

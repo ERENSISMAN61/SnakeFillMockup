@@ -74,7 +74,7 @@ public class CylinderSpawner : MonoBehaviour
             cylindersOnRoad.RemoveAt(0);
         }
     }
-    public void ExportCylinder(Rail rail)
+    public void ExportCylinder(Rail rail, GravityObject gravityObject)
     {
         if (isMovingAllSlots) return;
         isMovingAllSlots = true;
@@ -93,7 +93,7 @@ public class CylinderSpawner : MonoBehaviour
 
 
 
-        exportItem.ExportItem(rail);
+        exportItem.ExportItem(rail, gravityObject);
 
         MoveAllSlotsForward();
     }

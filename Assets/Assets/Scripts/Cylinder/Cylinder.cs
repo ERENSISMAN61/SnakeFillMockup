@@ -19,7 +19,8 @@ public class Cylinder : MonoBehaviour
     public float bulletSpeed = 5f; // Bullet hareket hızı
     public float waveAmplitude = 0.5f; // Yılan dalgasının genişliği
     public float waveFrequency = 2f; // Yılan dalgasının hızı
-
+    public float railMoveSpeed = 2f; // Ray üzerinde hareket hızı
+    public float bulletSpawnInterval = 0.15f;
     private Transform trashTransform;
     [SerializeField] private bool isOnAttackSlot = false;
     public bool isBusyWithEnemy = false;
@@ -32,46 +33,46 @@ public class Cylinder : MonoBehaviour
     {
         // allEnemiesController = FindAnyObjectByType<AllEnemiesController>();
     }
-    void Update()
-    {
-        if (isBusyWithEnemy) { Debug.Log("Busy with enemy, cannot attack now."); return; }
-        if (!isOnAttackSlot)
-        {
-            // Debug.Log("Not on attack slot, cannot attack.");
-            return;
-        }
-        if (UsedCapacity >= capacity)
-        {
-            Debug.Log("Cylinder is full, cannot export more items.");
-            return;
-        }
+    // void Update()
+    // {
+    //     if (isBusyWithEnemy) { Debug.Log("Busy with enemy, cannot attack now."); return; }
+    //     if (!isOnAttackSlot)
+    //     {
+    //         // Debug.Log("Not on attack slot, cannot attack.");
+    //         return;
+    //     }
+    //     if (UsedCapacity >= capacity)
+    //     {
+    //         Debug.Log("Cylinder is full, cannot export more items.");
+    //         return;
+    //     }
 
-        var attackableEnemies = allEnemiesController.attackableFrontEnemies;
+    //     var attackableEnemies = allEnemiesController.attackableFrontEnemies;
 
-        if (attackableEnemies.ContainsKey(colorType))
-        {
-            Enemy targetEnemy = attackableEnemies[colorType];
-            Debug.Log($"Found enemy with color {colorType}");
-            if (targetEnemy == null)
-            {
-                Debug.Log("Target enemy is null.");
-                return;
-            }
-            if (targetEnemy.health <= 0)
-            {
-                Debug.Log("Target enemy is already destroyed.");
-                return;
-            }
+    //     if (attackableEnemies.ContainsKey(colorType))
+    //     {
+    //         Enemy targetEnemy = attackableEnemies[colorType];
+    //         Debug.Log($"Found enemy with color {colorType}");
+    //         if (targetEnemy == null)
+    //         {
+    //             Debug.Log("Target enemy is null.");
+    //             return;
+    //         }
+    //         if (targetEnemy.health <= 0)
+    //         {
+    //             Debug.Log("Target enemy is already destroyed.");
+    //             return;
+    //         }
 
 
-            AttackEnemy(targetEnemy);
-        }
-        else
-        {
-            Debug.Log($"No attackable enemy found for color {colorType}");
-        }
-    }
-    public void ExportItem(Rail rail)
+    //         AttackEnemy(targetEnemy);
+    //     }
+    //     else
+    //     {
+    //         Debug.Log($"No attackable enemy found for color {colorType}");
+    //     }
+    // }
+    public void ExportItem(Rail rail, GravityObject gravityObject)
     {
         // transform.SetParent(trashTransform);
         // Logic to export this cylinder to the specified attack slot
@@ -80,21 +81,44 @@ public class Cylinder : MonoBehaviour
         // {
         //     occupiedAttackSlot.isFulled = true;
         //     occupiedAttackSlot.occupiedCylinder = this;
-        ExportMove(rail);
+        ExportMove(rail, gravityObject);
         // }
     }
 
 
-    public void ExportMove(Rail rail)
+    public void ExportMove(Rail rail, GravityObject gravityObject)
     {
-        transform.SetParent(rail.transform);
+        transform.SetParent(rail.railPoints[0]);
         transform.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
         {
-            Debug.Log("Cylinder reached attack slot.");
-
+            StartRailMovement(rail);
+            AttackEnemy(gravityObject);
         });
     }
 
+    public void StartRailMovement(Rail rail)
+    {
+        Sequence railSequence = DOTween.Sequence();
+
+        for (int i = 1; i < rail.railPoints.Count; i++)
+        {
+            int pointIndex = i;
+            int previousIndex = i - 1;
+
+            // Mesafeyi hesapla ve speed'e göre duration belirle
+            float distance = Vector3.Distance(rail.railPoints[previousIndex].position, rail.railPoints[pointIndex].position);
+            float duration = distance / railMoveSpeed;
+
+            railSequence.Append(transform.DOMove(rail.railPoints[pointIndex].position, duration).SetEase(Ease.Linear));
+        }
+
+        railSequence.OnComplete(() =>
+        {
+            // Reached the end of the rail
+            Debug.Log("Cylinder reached the end of the rail.");
+            DestroyCylinder();
+        });
+    }
     public void SetInitialText()
     {
         capacityText.text = capacity.ToString();
@@ -105,15 +129,15 @@ public class Cylinder : MonoBehaviour
         // this.trashTransform = trashTransform;
     }
 
-    private void AttackEnemy(Enemy targetEnemy)
+    private void AttackEnemy(GravityObject gravityObject)
     {
         isBusyWithEnemy = true;
 
         // Kaç mermi göndereceğimizi hesapla
         int remainingCapacity = capacity - UsedCapacity;
-        int bulletsToSend = Mathf.Min(remainingCapacity, targetEnemy.usableHealth);
+        int bulletsToSend = remainingCapacity;
 
-        targetEnemy.usableHealth -= bulletsToSend;
+
 
         if (bulletsToSend <= 0)
         {
@@ -147,8 +171,8 @@ public class Cylinder : MonoBehaviour
                 {
                     bulletScript.meshRenderer.material.color = bulletColor;
 
-                    bulletScript.targetPosition = targetEnemy.transform.position;
-                    bulletScript.targetEnemy = targetEnemy; // Hedef enemy'yi ata
+                    bulletScript.targetPosition = gravityObject.transform.position;
+                    bulletScript.targetEnemy = gravityObject; // Hedef enemy'yi ata
                     bulletScript.moveSpeed = bulletSpeed;
                     bulletScript.waveAmplitude = waveAmplitude;
                     bulletScript.waveFrequency = waveFrequency;
@@ -165,11 +189,11 @@ public class Cylinder : MonoBehaviour
                     DestroyCylinder();
                 }
                 // Hedefe ulaşma kontrolü için coroutine başlat
-                StartCoroutine(CheckBulletReachedTarget(bullet, targetEnemy));
+                StartCoroutine(CheckBulletReachedTarget(bullet));
             });
 
             // Her mermi arasında delay
-            snakeSequence.AppendInterval(0.08f);
+            snakeSequence.AppendInterval(bulletSpawnInterval);
         }
 
 
@@ -188,7 +212,7 @@ public class Cylinder : MonoBehaviour
             Destroy(gameObject);
         });
     }
-    private IEnumerator CheckBulletReachedTarget(GameObject bullet, Enemy targetEnemy)
+    private IEnumerator CheckBulletReachedTarget(GameObject bullet)
     {
         Bullet bulletScript = bullet.GetComponent<Bullet>();
 
@@ -196,11 +220,6 @@ public class Cylinder : MonoBehaviour
         {
             if (Vector3.Distance(bullet.transform.position, bulletScript.targetPosition) < 0.1f)
             {
-                // Mermi hedefe ulaştı
-                if (targetEnemy != null && targetEnemy.health > 0)
-                {
-                    targetEnemy.GetDamage();
-                }
 
                 activeBullets.Remove(bullet);
                 Destroy(bullet);
