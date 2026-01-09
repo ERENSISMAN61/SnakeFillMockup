@@ -21,18 +21,18 @@ public class Bus : MonoBehaviour
 
     }
 
-    void OnEnable()
-    {
-        GameManager.Instance.OnOneWallCleaned += HandleOneWallCleaned;
-    }
-    void OnDisable()
-    {
-        GameManager.Instance.OnOneWallCleaned -= HandleOneWallCleaned;
-    }
-    void OnDestroy()
-    {
-        GameManager.Instance.OnOneWallCleaned -= HandleOneWallCleaned;
-    }
+    // void OnEnable()
+    // {
+    //     GameManager.Instance.OnOneWallCleaned += HandleOneWallCleaned;
+    // }
+    // void OnDisable()
+    // {
+    //     GameManager.Instance.OnOneWallCleaned -= HandleOneWallCleaned;
+    // }
+    // void OnDestroy()
+    // {
+    //     GameManager.Instance.OnOneWallCleaned -= HandleOneWallCleaned;
+    // }
 
     void Update()
     {

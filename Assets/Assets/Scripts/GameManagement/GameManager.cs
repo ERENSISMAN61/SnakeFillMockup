@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     // Game Events
-    public event System.Action OnOneWallCleaned;
+    public event System.Action ColorsMerged;
 
     public List<GameObject> levels;
 
@@ -157,9 +157,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void TriggerOneWallCleaned()
+    public void TriggerColorsMerged()
     {
-        OnOneWallCleaned?.Invoke();
+        ColorsMerged?.Invoke();
     }
 
     private void DestroyLastLevel()

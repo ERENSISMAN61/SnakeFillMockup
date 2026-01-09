@@ -79,7 +79,7 @@ public class AllEnemiesController : MonoBehaviour
         {
             SetOutlineActive();
             SetFirstAttackableFrontEnemies();
-            GameManager.Instance.TriggerOneWallCleaned();
+            // GameManager.Instance.TriggerOneWallCleaned();
         }
     }
 

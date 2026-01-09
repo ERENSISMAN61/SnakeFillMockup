@@ -54,11 +54,17 @@ public class GravityObject : MonoBehaviour
     {
         List<GameObject> sourceBullets = bulletLists[sourceColor];
 
-        // İlk N adet objeyi al (merge edilecekler)
-        List<GameObject> bulletsToMerge = sourceBullets.Take(settings.outputCount).ToList();
+        // İlk threshold kadar objeyi al
+        List<GameObject> bulletsToProcess = sourceBullets.Take(settings.thresholdCount).ToList();
+
+        // TargetTransform'a mesafeye göre sırala ve en yakın N adet objeyi al (merge edilecekler)
+        List<GameObject> bulletsToMerge = bulletsToProcess
+            .OrderBy(b => Vector3.Distance(b.transform.position, targetTransform.position))
+            .Take(settings.outputCount)
+            .ToList();
 
         // Kalanları al (silinecekler)
-        List<GameObject> bulletsToDestroy = sourceBullets.Skip(settings.outputCount).Take(settings.thresholdCount - settings.outputCount).ToList();
+        List<GameObject> bulletsToDestroy = bulletsToProcess.Except(bulletsToMerge).ToList();
 
         // Merge edilecek objeleri bir sonraki renk listesine ekle
         Color nextColor = ColorTypeProvider.GetColor(settings.nextColorType);
@@ -112,5 +118,8 @@ public class GravityObject : MonoBehaviour
 
             }
         }
+
+
+        GameManager.Instance.TriggerColorsMerged();
     }
 }

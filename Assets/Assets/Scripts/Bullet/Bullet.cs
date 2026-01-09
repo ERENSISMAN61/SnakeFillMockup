@@ -18,11 +18,28 @@ public class Bullet : MonoBehaviour
     public Collider col;
     public ColorType colorType;
 
-    private bool isCheckingMovement = false;
+    public bool isCheckingMovement = false;
+    public bool isHitEnemy = false;
+    public bool isColorMergeMovement = false;
+    private bool firstHit = true;
     private Vector3 lastPositionCheck;
     public float stuckThreshold = 0.1f; // Bu mesafeden az hareket ettiyse stuck sayılır
     public float checkDelay = 0.03f; // Kaç saniye sonra kontrol edilecek
 
+
+
+    void OnEnable()
+    {
+        GameManager.Instance.ColorsMerged += MoveAfterColorMerge;
+    }
+    void OnDisable()
+    {
+        GameManager.Instance.ColorsMerged -= MoveAfterColorMerge;
+    }
+    void OnDestroy()
+    {
+        GameManager.Instance.ColorsMerged -= MoveAfterColorMerge;
+    }
     void Start()
     {
         startPosition = transform.position;
@@ -59,8 +76,17 @@ public class Bullet : MonoBehaviour
         {
             // Enemy'ye direkt çarptı
             hasHit = true;
-            rb.isKinematic = true;
-            targetEnemy.AddBullet(gameObject, colorType);
+            // rb.isKinematic = true;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            isHitEnemy = true;
+            if (firstHit)
+            {
+                targetEnemy.AddBullet(gameObject, colorType);
+                firstHit = false;
+            }
+            isColorMergeMovement = false;
         }
     }
 
@@ -79,13 +105,33 @@ public class Bullet : MonoBehaviour
         {
             // Hareket etmedi veya çok az hareket etti, stuck durumunda
             hasHit = true;
-            rb.isKinematic = true;
-            targetEnemy.AddBullet(gameObject, colorType);
+            // rb.isKinematic = true;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            if (firstHit)
+            {
+                targetEnemy.AddBullet(gameObject, colorType);
+                firstHit = false;
+            }
+            isColorMergeMovement = false;
         }
         else
         {
             // Hala hareket ediyor, tekrar kontrol et
             isCheckingMovement = false;
+            StartCoroutine(CheckIfStuck());
         }
+    }
+
+
+    private void MoveAfterColorMerge()
+    {
+
+
+        rb.isKinematic = false;
+        hasHit = false;
+        isColorMergeMovement = true;
+        // CheckIfStuck();
+
     }
 }
