@@ -6,7 +6,7 @@ using DG.Tweening;
 public class CylinderSpawner : MonoBehaviour
 {
     [SerializeField] private CylinderController cylinderController;
-    [SerializeField] private AttackSlotsController attackSlotsController;
+
 
     [TableList]
     [SerializeField] private List<CylinderData> cylindersToSpawn = new List<CylinderData>();
@@ -74,12 +74,12 @@ public class CylinderSpawner : MonoBehaviour
             cylindersOnRoad.RemoveAt(0);
         }
     }
-    public void ExportCylinder(int slotIndex)
+    public void ExportCylinder(Rail rail)
     {
         if (isMovingAllSlots) return;
         isMovingAllSlots = true;
 
-        if (attackSlotsController.attackSlots[slotIndex].isFulled) return;
+        // if (attackSlotsController.attackSlots[slotIndex].isFulled) return;
         if (cylindersOnRoad.Count <= 0) return;
 
         Cylinder exportItem = null;
@@ -93,7 +93,7 @@ public class CylinderSpawner : MonoBehaviour
 
 
 
-        exportItem.ExportItem(attackSlotsController, slotIndex);
+        exportItem.ExportItem(rail);
 
         MoveAllSlotsForward();
     }

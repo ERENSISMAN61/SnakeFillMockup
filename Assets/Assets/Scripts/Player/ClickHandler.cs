@@ -4,16 +4,16 @@ public class ClickHandler : MonoBehaviour
 {
 
     [SerializeField] private LayerMask cylinderLayerMask;
-    [SerializeField] private AttackSlotsController attackSlotsController;
+    [SerializeField] private Rail rail;
 
-    private int freeSlotIndex = -2;
+
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            freeSlotIndex = attackSlotsController.WhichSlotsFree();
-            if (freeSlotIndex == -1) return;
+            // freeSlotIndex = attackSlotsController.WhichSlotsFree();
+            // if (freeSlotIndex == -1) return;
 
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -22,7 +22,7 @@ public class ClickHandler : MonoBehaviour
                 CylinderSpawner clickedCylinderSpawner = hitInfo.collider.GetComponent<CylinderSpawner>();
                 if (clickedCylinderSpawner != null)
                 {
-                    clickedCylinderSpawner.ExportCylinder(freeSlotIndex);
+                    clickedCylinderSpawner.ExportCylinder(rail);
                 }
             }
         }

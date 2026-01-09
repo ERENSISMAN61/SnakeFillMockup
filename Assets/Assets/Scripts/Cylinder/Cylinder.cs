@@ -71,27 +71,26 @@ public class Cylinder : MonoBehaviour
             Debug.Log($"No attackable enemy found for color {colorType}");
         }
     }
-    public void ExportItem(AttackSlotsController attackSlotsController, int slotIndex)
+    public void ExportItem(Rail rail)
     {
         // transform.SetParent(trashTransform);
         // Logic to export this cylinder to the specified attack slot
-        occupiedAttackSlot = attackSlotsController.attackSlots[slotIndex];
-        if (!occupiedAttackSlot.isFulled)
-        {
-            occupiedAttackSlot.isFulled = true;
-            occupiedAttackSlot.occupiedCylinder = this;
-            ExportMove(occupiedAttackSlot.transform);
-        }
+        // occupiedAttackSlot = attackSlotsController.attackSlots[slotIndex];
+        // if (!occupiedAttackSlot.isFulled)
+        // {
+        //     occupiedAttackSlot.isFulled = true;
+        //     occupiedAttackSlot.occupiedCylinder = this;
+        ExportMove(rail);
+        // }
     }
 
 
-    public void ExportMove(Transform targetTransform)
+    public void ExportMove(Rail rail)
     {
-        transform.SetParent(targetTransform);
+        transform.SetParent(rail.transform);
         transform.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
         {
             Debug.Log("Cylinder reached attack slot.");
-            isOnAttackSlot = true;
 
         });
     }
