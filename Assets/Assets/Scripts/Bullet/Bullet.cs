@@ -47,16 +47,28 @@ public class Bullet : MonoBehaviour
 
         // Hareket yönüne dik olan vektörü bul (sağa-sola sallanmak için)
         perpendicular = Vector3.Cross(direction, Vector3.up).normalized;
+
+        // Rigidbody ayarları
+        if (rb != null)
+        {
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+
+        }
     }
 
     void FixedUpdate()
     {
-        if (hasHit) return;
+        // if (hasHit) return;
 
         if (rb != null)
         {
-            Vector3 newPosition = Vector3.MoveTowards(rb.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
-            rb.MovePosition(newPosition);
+            // Velocity bazlı hareket - daha smooth ve fizik motoruyla uyumlu
+            Vector3 direction = (targetPosition - rb.position).normalized;
+            Vector3 targetVelocity = direction * moveSpeed;
+
+            // Mevcut velocity'yi hedef velocity'ye yumuşak geçiş
+            rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, targetVelocity, Time.fixedDeltaTime * 10f);
         }
     }
 
@@ -126,7 +138,7 @@ public class Bullet : MonoBehaviour
 
     private void MoveAfterColorMerge()
     {
-
+        if (isHitEnemy) return;
 
         rb.isKinematic = false;
         hasHit = false;
