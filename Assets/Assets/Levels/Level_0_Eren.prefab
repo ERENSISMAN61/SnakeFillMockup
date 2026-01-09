@@ -607,7 +607,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1678796234900608997
 Transform:
   m_ObjectHideFlags: 0
@@ -635,7 +635,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2789098531239492264}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad69a7cf225116a46a3981a03b7012bc, type: 3}
   m_Name: 
@@ -1694,6 +1694,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffea08d2fedf98b469379165d6371d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mergeSettingsList:
+  - colorType: 1
+    thresholdCount: 20
+    outputCount: 5
+    nextColorType: 0
+  - colorType: 0
+    thresholdCount: 20
+    outputCount: 5
+    nextColorType: 1
+  - colorType: 1
+    thresholdCount: 20
+    outputCount: 5
+    nextColorType: 2
+  - colorType: 2
+    thresholdCount: 20
+    outputCount: 5
+    nextColorType: 3
+  - colorType: 3
+    thresholdCount: 20
+    outputCount: 5
+    nextColorType: 5
+  - colorType: 5
+    thresholdCount: 20
+    outputCount: 5
+    nextColorType: 4
 --- !u!54 &7330598492069302735
 Rigidbody:
   m_ObjectHideFlags: 0

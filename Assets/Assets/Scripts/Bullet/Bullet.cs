@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
     public bool hasHit = false;
     public Rigidbody rb;
     public Collider col;
-
+    public ColorType colorType;
 
     void Start()
     {
@@ -68,6 +68,7 @@ public class Bullet : MonoBehaviour
 
 
                 rb.isKinematic = true;
+                targetEnemy.AddBullet(gameObject, colorType);
                 // transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InSine).OnComplete(() =>
                 // {
                 //     Destroy(gameObject);
