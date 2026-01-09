@@ -319,7 +319,7 @@ MonoBehaviour:
   bulletSpeed: 10
   waveAmplitude: 0.1
   waveFrequency: 2
-  railMoveSpeed: 4
+  railMoveSpeed: 5
   bulletSpawnInterval: 0.15
   isOnAttackSlot: 0
   isBusyWithEnemy: 0

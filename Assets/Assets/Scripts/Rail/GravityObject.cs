@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using TMPro;
+using UnityEngine.UI;
 
 public class GravityObject : MonoBehaviour
 {
     public Transform targetTransform;
+
     [System.Serializable]
     public class MergeSettings
     {
@@ -16,7 +19,18 @@ public class GravityObject : MonoBehaviour
         public ColorType nextColorType; // Merge edince hangi renge dönüşecek
     }
 
+    [System.Serializable]
+    public class TargetColorSettings
+    {
+        public ColorType targetColor;
+        public int targetCount;
+        public TextMeshProUGUI countText;
+        public Image colorImage;
+    }
+
     [SerializeField] private List<MergeSettings> mergeSettingsList = new List<MergeSettings>();
+    [SerializeField] private List<TargetColorSettings> targetColorsList = new List<TargetColorSettings>();
+
     [ShowInInspector]
     private Dictionary<ColorType, List<GameObject>> bulletLists = new Dictionary<ColorType, List<GameObject>>();
 
@@ -26,6 +40,20 @@ public class GravityObject : MonoBehaviour
         foreach (ColorType colorType in System.Enum.GetValues(typeof(ColorType)))
         {
             bulletLists[colorType] = new List<GameObject>();
+        }
+
+        // Target UI'larını ayarla
+        foreach (TargetColorSettings target in targetColorsList)
+        {
+            if (target.countText != null)
+            {
+                target.countText.text = target.targetCount.ToString();
+            }
+
+            if (target.colorImage != null)
+            {
+                target.colorImage.color = ColorTypeProvider.GetColor(target.targetColor);
+            }
         }
     }
 
@@ -38,6 +66,9 @@ public class GravityObject : MonoBehaviour
 
         bulletLists[colorType].Add(bullet);
 
+        // Target kontrolü - hedef renk ve sayıya ulaşıldı mı?
+        CheckTargetCompletion(colorType);
+
         // Bu renk için merge ayarı var mı kontrol et
         MergeSettings settings = mergeSettingsList.FirstOrDefault(s => s.colorType == colorType);
         if (settings != null)
@@ -47,6 +78,34 @@ public class GravityObject : MonoBehaviour
             {
                 MergeBullets(colorType, settings);
             }
+        }
+    }
+
+    private void CheckTargetCompletion(ColorType colorType)
+    {
+
+        // Bu renk için target var mı kontrol et
+        TargetColorSettings target = targetColorsList.FirstOrDefault(t => t.targetColor == colorType);
+        if (target != null)
+        {
+            int currentCount = bulletLists[colorType].Count;
+
+            // UI'ı güncelle
+            if (target.countText != null)
+            {
+                target.countText.text = currentCount.ToString();
+            }
+
+            // Hedefe ulaşıldı mı?
+            if (currentCount >= target.targetCount)
+            {
+                // Kazandı!
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.CheckCompleteLevel(true);
+                }
+            }
+
         }
     }
 
@@ -87,6 +146,7 @@ public class GravityObject : MonoBehaviour
                 // Yeni renk listesine ekle
                 bulletLists[settings.nextColorType].Add(bullet);
 
+                StartCoroutine(DelayedTargetCheck(settings.nextColorType));
 
                 // Original scale'i sakla
                 Vector3 originalScale = bullet.transform.localScale;
@@ -121,5 +181,17 @@ public class GravityObject : MonoBehaviour
 
 
         GameManager.Instance.TriggerColorsMerged();
+
+    }
+
+    private System.Collections.IEnumerator DelayedTargetCheck(ColorType nextColorType)
+    {
+        // Bir frame bekle
+        yield return new WaitForSeconds(0.1f);
+
+        // Tüm renkler için target kontrolü yap
+
+        CheckTargetCompletion(nextColorType);
+
     }
 }
