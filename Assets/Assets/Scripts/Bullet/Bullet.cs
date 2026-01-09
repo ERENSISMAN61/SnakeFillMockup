@@ -18,6 +18,11 @@ public class Bullet : MonoBehaviour
     public Collider col;
     public ColorType colorType;
 
+    private bool isCheckingMovement = false;
+    private Vector3 lastPositionCheck;
+    public float stuckThreshold = 0.1f; // Bu mesafeden az hareket ettiyse stuck sayılır
+    public float checkDelay = 0.03f; // Kaç saniye sonra kontrol edilecek
+
     void Start()
     {
         startPosition = transform.position;
@@ -42,30 +47,45 @@ public class Bullet : MonoBehaviour
     {
         if (hasHit) return;
 
-        // // EnemyCollider'a çarptı mı?
-        // GravityObject enemyCollider = other.GetComponent<GravityObject>();
-        if (other.collider.tag == "Snake" || other.collider.tag == "Enemy")
+        if (other.collider.tag == "Snake")
         {
-            // Bu bizim hedef enemy'miz mi kontrol et
-            // if (targetEnemy != null && enemyCollider == targetEnemy)
-            // {
-            if (other.collider.tag == "Enemy")
+            // Snake'e çarptı, pozisyon kontrolü başlat
+            if (!isCheckingMovement)
             {
-                hasHit = true;
-                rb.isKinematic = true;
-                targetEnemy.AddBullet(gameObject, colorType);
+                StartCoroutine(CheckIfStuck());
             }
-
-
-
-            // rb.isKinematic = true;
-
-            // transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InSine).OnComplete(() =>
-            // {
-            //     Destroy(gameObject);
-            // });
-            // }
         }
+        else if (other.collider.tag == "Enemy")
+        {
+            // Enemy'ye direkt çarptı
+            hasHit = true;
+            rb.isKinematic = true;
+            targetEnemy.AddBullet(gameObject, colorType);
+        }
+    }
 
+    private System.Collections.IEnumerator CheckIfStuck()
+    {
+        isCheckingMovement = true;
+        lastPositionCheck = transform.position;
+
+        // Belirli bir süre bekle
+        yield return new WaitForSeconds(checkDelay);
+
+        // Pozisyon değişimi kontrolü
+        float distanceMoved = Vector3.Distance(lastPositionCheck, transform.position);
+
+        if (distanceMoved < stuckThreshold)
+        {
+            // Hareket etmedi veya çok az hareket etti, stuck durumunda
+            hasHit = true;
+            rb.isKinematic = true;
+            targetEnemy.AddBullet(gameObject, colorType);
+        }
+        else
+        {
+            // Hala hareket ediyor, tekrar kontrol et
+            isCheckingMovement = false;
+        }
     }
 }

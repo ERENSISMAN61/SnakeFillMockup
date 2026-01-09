@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 
 public class GravityObject : MonoBehaviour
 {
+    public Transform targetTransform;
     [System.Serializable]
     public class MergeSettings
     {

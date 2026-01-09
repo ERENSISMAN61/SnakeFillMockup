@@ -172,7 +172,7 @@ public class Cylinder : MonoBehaviour
                     bulletScript.meshRenderer.material.color = bulletColor;
                     bulletScript.colorType = colorType;
 
-                    bulletScript.targetPosition = gravityObject.transform.position;
+                    bulletScript.targetPosition = gravityObject.targetTransform.position;
                     bulletScript.targetEnemy = gravityObject; // Hedef enemy'yi ata
                     bulletScript.moveSpeed = bulletSpeed;
                     bulletScript.waveAmplitude = waveAmplitude;

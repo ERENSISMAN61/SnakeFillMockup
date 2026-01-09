@@ -144,6 +144,8 @@ MonoBehaviour:
   rb: {fileID: 4670990966683671460}
   col: {fileID: 4772124818386691457}
   colorType: 0
+  stuckThreshold: 0.1
+  checkDelay: 0.03
 --- !u!135 &4772124818386691457
 SphereCollider:
   m_ObjectHideFlags: 0
