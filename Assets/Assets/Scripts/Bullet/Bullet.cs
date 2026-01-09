@@ -27,53 +27,44 @@ public class Bullet : MonoBehaviour
         perpendicular = Vector3.Cross(direction, Vector3.up).normalized;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (hasHit) return;
 
-        // // İleri doğru hareket
-        // float step = moveSpeed * Time.deltaTime;
-        // traveledDistance += step;
-
-        // // Yılan dalgası hareketi (sine wave)
-        // float waveOffset = Mathf.Sin(traveledDistance * waveFrequency) * waveAmplitude;
-
-        // // Yeni pozisyon: İleri + Dalga hareketi
-        // Vector3 forwardMovement = direction * step;
-        // Vector3 waveMovement = perpendicular * (waveOffset - Mathf.Sin((traveledDistance - step) * waveFrequency) * waveAmplitude);
-
-        // transform.position += forwardMovement + waveMovement;
-
-        // // Hedefe yaklaştık mı kontrol et
-        // if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
-        // {
-        //     transform.position = targetPosition;
-        // }
-
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        if (rb != null)
+        {
+            Vector3 newPosition = Vector3.MoveTowards(rb.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(newPosition);
+        }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         if (hasHit) return;
 
-        // EnemyCollider'a çarptı mı?
-        GravityObject enemyCollider = other.GetComponent<GravityObject>();
-        if (enemyCollider != null)
+        // // EnemyCollider'a çarptı mı?
+        // GravityObject enemyCollider = other.GetComponent<GravityObject>();
+        if (other.collider.tag == "Snake" || other.collider.tag == "Enemy")
         {
             // Bu bizim hedef enemy'miz mi kontrol et
-            if (targetEnemy != null && enemyCollider == targetEnemy)
+            // if (targetEnemy != null && enemyCollider == targetEnemy)
+            // {
+            if (other.collider.tag == "Enemy")
             {
                 hasHit = true;
-
-
                 rb.isKinematic = true;
                 targetEnemy.AddBullet(gameObject, colorType);
-                // transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InSine).OnComplete(() =>
-                // {
-                //     Destroy(gameObject);
-                // });
             }
+
+
+
+            // rb.isKinematic = true;
+
+            // transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InSine).OnComplete(() =>
+            // {
+            //     Destroy(gameObject);
+            // });
+            // }
         }
 
     }

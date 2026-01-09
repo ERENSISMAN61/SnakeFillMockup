@@ -316,10 +316,10 @@ MonoBehaviour:
   capacityText: {fileID: 3512593546118792852}
   bulletPrefab: {fileID: 8380174973506403459, guid: f692c990e39c7084aa001e05a7f0afaa, type: 3}
   bulletSpacing: 0.3
-  bulletSpeed: 5
+  bulletSpeed: 10
   waveAmplitude: 0.1
   waveFrequency: 2
-  railMoveSpeed: 2
-  bulletSpawnInterval: 0.3
+  railMoveSpeed: 4
+  bulletSpawnInterval: 0.15
   isOnAttackSlot: 0
   isBusyWithEnemy: 0

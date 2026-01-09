@@ -875,7 +875,6 @@ GameObject:
   - component: {fileID: 9210354248685193856}
   - component: {fileID: 4977243697047757871}
   - component: {fileID: 7653381347597513221}
-  - component: {fileID: 1883136952180802659}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -951,28 +950,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1883136952180802659
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3115859583154988357}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &3311852426228304514
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,7 +1651,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1696,7 +1673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mergeSettingsList:
   - colorType: 1
-    thresholdCount: 20
+    thresholdCount: 90
     outputCount: 5
     nextColorType: 0
   - colorType: 0
@@ -1742,10 +1719,10 @@ Rigidbody:
   m_ImplicitCom: 0
   m_ImplicitTensor: 0
   m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
+  m_IsKinematic: 1
+  m_Interpolate: 2
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &4757168408500459875
 GameObject:
   m_ObjectHideFlags: 0

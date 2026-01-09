@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 
 public class GravityObject : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GravityObject : MonoBehaviour
     }
 
     [SerializeField] private List<MergeSettings> mergeSettingsList = new List<MergeSettings>();
+    [ShowInInspector]
     private Dictionary<ColorType, List<GameObject>> bulletLists = new Dictionary<ColorType, List<GameObject>>();
 
     void Start()
@@ -85,7 +87,7 @@ public class GravityObject : MonoBehaviour
                 // Scale'i 0 yap, sonra rengi değiştir ve pop scale ile geri getir
                 bullet.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack).OnComplete(() =>
                 {
-                    bulletScript.meshRenderer.material.color = nextColor;
+                    bulletScript.meshRenderer.material.color = Color.Lerp(nextColor, Color.white, 0.3f);
                     bullet.transform.DOScale(originalScale, 0.3f).SetEase(Ease.OutBack);
                 });
             }

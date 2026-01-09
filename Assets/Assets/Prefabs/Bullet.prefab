@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4670990966683671460}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Snake
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,6 +143,7 @@ MonoBehaviour:
   hasHit: 0
   rb: {fileID: 4670990966683671460}
   col: {fileID: 4772124818386691457}
+  colorType: 0
 --- !u!135 &4772124818386691457
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -162,7 +163,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.15
+  m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4670990966683671460
 Rigidbody:
@@ -188,9 +189,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!1001 &3291148161749304205
 PrefabInstance:
   m_ObjectHideFlags: 0
