@@ -15,12 +15,12 @@ public class ColorTypeProvider : MonoBehaviour
     public static Color GetColor(ColorType colorType)
     {
         int index = (int)colorType;
-        
+
         if (index >= 0 && index < colorMap.Length)
         {
             return colorMap[index];
         }
-        
+
         Debug.LogWarning($"ColorType {colorType} index {index} is out of range. Returning white.");
         return Color.white;
     }

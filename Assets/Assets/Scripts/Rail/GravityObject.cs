@@ -114,7 +114,7 @@ public class GravityObject : MonoBehaviour
                             if (bulletScript != null)
                             {
                                 Vector3 originalScale = bullet.transform.localScale;
-                                Color originalColor = bulletScript.meshRenderer.material.color;
+                                Color originalColor = new Color(1.0f, 0.5f, 0.0f);
 
                                 // Scale 2 katına çıkarken beyaza dön
                                 bullet.transform.DOScale(originalScale * 2f, 0.3f).SetEase(Ease.Linear);

@@ -101,7 +101,7 @@ public class Cylinder : MonoBehaviour
             transform.SetParent(rail.railPoints[rail.railPoints.Count - 1]);
         }
 
-        transform.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
+        transform.DOLocalMove(Vector3.zero, 0.1f).OnComplete(() =>
         {
             StartRailMovement(rail, reverseRail);
             AttackEnemy(gravityObject);
