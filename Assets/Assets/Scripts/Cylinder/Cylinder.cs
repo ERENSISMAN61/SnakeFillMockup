@@ -88,28 +88,46 @@ public class Cylinder : MonoBehaviour
 
     public void ExportMove(Rail rail, GravityObject gravityObject)
     {
-        transform.SetParent(rail.railPoints[0]);
+        float distanceToRailStart = Vector3.Distance(transform.position, rail.railPoints[0].position);
+        float distanceToRailEnd = Vector3.Distance(transform.position, rail.railPoints[rail.railPoints.Count - 1].position);
+
+        bool reverseRail = distanceToRailEnd < distanceToRailStart;
+        if (distanceToRailStart < distanceToRailEnd)
+        {
+            transform.SetParent(rail.railPoints[0]);
+        }
+        else
+        {
+            transform.SetParent(rail.railPoints[rail.railPoints.Count - 1]);
+        }
+
         transform.DOLocalMove(Vector3.zero, 0.5f).OnComplete(() =>
         {
-            StartRailMovement(rail);
+            StartRailMovement(rail, reverseRail);
             AttackEnemy(gravityObject);
         });
     }
 
-    public void StartRailMovement(Rail rail)
+    public void StartRailMovement(Rail rail, bool reverse = false)
     {
         Sequence railSequence = DOTween.Sequence();
 
-        for (int i = 1; i < rail.railPoints.Count; i++)
+        List<Transform> railPoints = rail.railPoints;
+
+        if (reverse)
+        {
+            railPoints.Reverse();
+        }
+        for (int i = 1; i < railPoints.Count; i++)
         {
             int pointIndex = i;
             int previousIndex = i - 1;
 
             // Mesafeyi hesapla ve speed'e göre duration belirle
-            float distance = Vector3.Distance(rail.railPoints[previousIndex].position, rail.railPoints[pointIndex].position);
+            float distance = Vector3.Distance(railPoints[previousIndex].position, railPoints[pointIndex].position);
             float duration = distance / railMoveSpeed;
 
-            railSequence.Append(transform.DOMove(rail.railPoints[pointIndex].position, duration).SetEase(Ease.Linear));
+            railSequence.Append(transform.DOMove(railPoints[pointIndex].position, duration).SetEase(Ease.Linear));
         }
 
         railSequence.OnComplete(() =>

@@ -5,11 +5,12 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GravityObject : MonoBehaviour
 {
     public Transform targetTransform;
-
+    private bool closeMerging = false;
     [System.Serializable]
     public class MergeSettings
     {
@@ -102,15 +103,46 @@ public class GravityObject : MonoBehaviour
                 // Kazandı!
                 if (GameManager.Instance != null)
                 {
-                    GameManager.Instance.CheckCompleteLevel(true);
+                    closeMerging = true;
+
+                    // Target renkteki tüm objeleri animasyon ile büyüt
+                    foreach (GameObject bullet in bulletLists[colorType])
+                    {
+                        if (bullet != null)
+                        {
+                            Bullet bulletScript = bullet.GetComponent<Bullet>();
+                            if (bulletScript != null)
+                            {
+                                Vector3 originalScale = bullet.transform.localScale;
+                                Color originalColor = bulletScript.meshRenderer.material.color;
+
+                                // Scale 2 katına çıkarken beyaza dön
+                                bullet.transform.DOScale(originalScale * 2f, 0.3f).SetEase(Ease.Linear);
+                                bulletScript.meshRenderer.material.DOColor(Color.white, 0.3f).OnComplete(() =>
+                                {
+                                    // Eski scale'e dönerken eski renge dön
+                                    bullet.transform.DOScale(originalScale, 0.3f).SetEase(Ease.OutBack);
+                                    bulletScript.meshRenderer.material.DOColor(originalColor, 0.3f);
+                                });
+                            }
+                        }
+                    }
+
+                    StartCoroutine(CompleteCoroutine());
                 }
             }
 
         }
     }
+    private IEnumerator CompleteCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        GameManager.Instance.CheckCompleteLevel(true);
+    }
 
     private void MergeBullets(ColorType sourceColor, MergeSettings settings)
     {
+        // if (closeMerging) return;
         List<GameObject> sourceBullets = bulletLists[sourceColor];
 
         // İlk threshold kadar objeyi al

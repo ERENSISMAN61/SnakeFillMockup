@@ -97,6 +97,21 @@ public class CylinderSpawner : MonoBehaviour
 
         MoveAllSlotsForward();
     }
+    public GameObject GetFirstExportableObject()
+    {
+        if (isMovingAllSlots) return null;
+        //   isMovingAllSlots = true;
+
+        // if (attackSlotsController.attackSlots[slotIndex].isFulled) return;
+        if (cylindersOnRoad.Count <= 0) return null;
+
+        Cylinder exportItem = null;
+        exportItem = cylindersOnRoad[0].GetComponent<Cylinder>();
+
+        if (exportItem == null) return null;
+
+        return exportItem.gameObject;
+    }
 
     private void MoveAllSlotsForward()
     {
