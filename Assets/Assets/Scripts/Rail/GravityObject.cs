@@ -148,11 +148,15 @@ public class GravityObject : MonoBehaviour
         // İlk threshold kadar objeyi al
         List<GameObject> bulletsToProcess = sourceBullets.Take(settings.thresholdCount).ToList();
 
-        // TargetTransform'a mesafeye göre sırala ve en yakın N adet objeyi al (merge edilecekler)
-        List<GameObject> bulletsToMerge = bulletsToProcess
-            .OrderBy(b => Vector3.Distance(b.transform.position, targetTransform.position))
-            .Take(settings.outputCount)
-            .ToList();
+        // // TargetTransform'a mesafeye göre sırala ve en yakın N adet objeyi al (merge edilecekler)
+        // List<GameObject> bulletsToMerge = bulletsToProcess
+        //     .OrderBy(b => Vector3.Distance(b.transform.position, targetTransform.position))
+        //     .Take(settings.outputCount)
+        //     .ToList();
+
+        List<GameObject> bulletsToMerge = sourceBullets.Take(settings.outputCount).ToList();
+
+
 
         // Kalanları al (silinecekler)
         List<GameObject> bulletsToDestroy = bulletsToProcess.Except(bulletsToMerge).ToList();

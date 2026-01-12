@@ -1245,6 +1245,28 @@ MonoBehaviour:
     colorType: 0
   - capacity: 5
     colorType: 2
+  - capacity: 25
+    colorType: 1
+  - capacity: 35
+    colorType: 0
+  - capacity: 35
+    colorType: 1
+  - capacity: 25
+    colorType: 2
+  - capacity: 15
+    colorType: 3
+  - capacity: 20
+    colorType: 0
+  - capacity: 25
+    colorType: 2
+  - capacity: 10
+    colorType: 0
+  - capacity: 15
+    colorType: 1
+  - capacity: 20
+    colorType: 0
+  - capacity: 15
+    colorType: 2
   cylindersOnRoad: []
   isMovingAllSlots: 0
 --- !u!65 &6500197027406524434
@@ -2044,6 +2066,28 @@ MonoBehaviour:
     colorType: 0
   - capacity: 15
     colorType: 2
+  - capacity: 35
+    colorType: 1
+  - capacity: 35
+    colorType: 2
+  - capacity: 5
+    colorType: 0
+  - capacity: 15
+    colorType: 3
+  - capacity: 20
+    colorType: 1
+  - capacity: 15
+    colorType: 0
+  - capacity: 10
+    colorType: 0
+  - capacity: 20
+    colorType: 2
+  - capacity: 15
+    colorType: 0
+  - capacity: 20
+    colorType: 1
+  - capacity: 25
+    colorType: 2
   cylindersOnRoad: []
   isMovingAllSlots: 0
 --- !u!65 &6244983334288250890
@@ -2194,28 +2238,28 @@ MonoBehaviour:
   targetTransform: {fileID: 8379888542037937042}
   mergeSettingsList:
   - colorType: 1
-    thresholdCount: 20
+    thresholdCount: 40
     outputCount: 5
     nextColorType: 0
   - colorType: 0
-    thresholdCount: 20
+    thresholdCount: 40
     outputCount: 5
     nextColorType: 2
   - colorType: 2
-    thresholdCount: 20
+    thresholdCount: 40
     outputCount: 5
     nextColorType: 3
   - colorType: 3
-    thresholdCount: 20
+    thresholdCount: 40
     outputCount: 5
     nextColorType: 5
   - colorType: 5
-    thresholdCount: 20
+    thresholdCount: 40
     outputCount: 5
     nextColorType: 4
   targetColorsList:
   - targetColor: 5
-    targetCount: 5
+    targetCount: 15
     countText: {fileID: 9145757256550650178}
     colorImage: {fileID: 7317250162910140812}
 --- !u!54 &7330598492069302735
@@ -4495,6 +4539,28 @@ MonoBehaviour:
     colorType: 1
   - capacity: 5
     colorType: 3
+  - capacity: 15
+    colorType: 0
+  - capacity: 25
+    colorType: 3
+  - capacity: 35
+    colorType: 1
+  - capacity: 20
+    colorType: 0
+  - capacity: 15
+    colorType: 2
+  - capacity: 20
+    colorType: 3
+  - capacity: 25
+    colorType: 0
+  - capacity: 10
+    colorType: 1
+  - capacity: 15
+    colorType: 0
+  - capacity: 20
+    colorType: 2
+  - capacity: 25
+    colorType: 0
   cylindersOnRoad: []
   isMovingAllSlots: 0
 --- !u!65 &3838543925246442788
